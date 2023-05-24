@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:thefirstlineofcode="http://maven.apache.org/POM/4.0.0
+		http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.thefirstlineofcode.granite</groupId>
+		<artifactId>com.thefirstlineofcode.granite</artifactId>
+		<version>1.0.3-RELEASE</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<groupId>com.thefirstlineofcode.granite</groupId>
+	<artifactId>granite-lite</artifactId>
+	<packaging>pom</packaging>
+	<name>XMPP server deploy lite plugins</name>
+
+	<modules>
+		<module>auth</module>
+		<module>dba</module>
+		<module>session</module>
+		<module>pipeline</module>
+		<module>xeps</module>
+		<module>im</module>
+	</modules>
+
+</project>

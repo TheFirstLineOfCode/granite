@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thefirstlineofcode.granite.lite.xeps.muc.RoomMapper">
+	<select id="selectCountByJid" resultType="int">
+		SELECT count(*) FROM ROOMS WHERE room_jid = #{arg0}
+	</select>
+	
+	<select id="selectCount" resultType="int">
+		SELECT
+			count(*)
+		FROM ROOMS R
+			LEFT OUTER JOIN ROOM_CONFIGS RC ON
+				R.id = RC.room_id
+		WHERE
+			RC.public_room = TRUE
+	</select>
+	
+	<select id="selectRoomItems" resultMap="roomItemResultMap">
+		SELECT
+			R.room_jid AS r_room_jid,
+			RC.room_name AS rc_room_name
+		FROM ROOMS R
+			LEFT OUTER JOIN ROOM_CONFIGS RC ON
+				R.id = RC.room_id
+		WHERE
+			RC.public_room = TRUE
+	</select>
+	
+	<resultMap id="roomItemResultMap" type="RoomItem">
+	    <result property="jid" column="r_room_jid"/>
+	    <result property="name" column="rc_room_name"/>
+	</resultMap>
+	
+	<select id="selectByJid" resultMap="roomResultMap">
+		SELECT
+			R.id AS r_id,
+			R.room_jid AS r_room_jid,
+			R.creator AS r_creator,
+			R.create_time AS r_create_time,
+			R.locked AS r_locked,
+			RC.id AS rc_id,
+			RC.room_id AS rc_room_id,
+			RC.room_name AS rc_room_name,
+			RC.room_desc AS rc_room_desc,
+			RC.lang AS rc_lang,
+			RC.enable_logging AS rc_enable_logging,
+			RC.change_subject AS rc_change_subject,
+			RC.allow_invites AS rc_allow_invites,
+			RC.allow_pm AS rc_allow_pm,
+			RC.max_users AS rc_max_users,
+			RC.public_room AS rc_public_room,
+			RC.persistent_room AS rc_persistent_room,
+			RC.moderated_room AS rc_moderated_room,
+			RC.members_only AS rc_members_only,
+			RC.password_protected_room AS rc_password_protected_room,
+			RC.room_secret AS rc_room_secret,
+			RC.who_is AS rc_who_is,
+			RC.max_history_fetch AS rc_max_history_fetch,
+			RC.pub_sub AS rc_pub_sub,
+			RCPB.id AS rfpb_id,
+			RCPB.room_config_id AS rfpb_room_config_id,
+			RCPB.moderator AS rfpb_moderator,
+			RCPB.participant AS rfpb_participant,
+			RCPB.visitor AS rfpb_visitor,
+			RCGML.id AS rcgml_id,
+			RCGML.room_config_id AS rcgml_room_config_id,
+			RCGML.moderator AS rcgml_moderator,
+			RCGML.participant AS rcgml_participant,
+			RCGML.visitor AS rcgml_visitor
+		FROM ROOMS R
+			LEFT OUTER JOIN ROOM_CONFIGS RC ON
+				R.id = RC.room_id
+			LEFT OUTER JOIN ROOM_CONFIG_PRESENCE_BROADCASTS RCPB ON
+				RC.id = RCPB.room_config_id
+			LEFT OUTER JOIN ROOM_CONFIG_GET_MEMBER_LISTS RCGML ON
+				RC.id = RCGML.room_config_id
+		WHERE
+			R.room_jid = #{arg0}
+	</select>
+	
+	<resultMap id="roomResultMap" type="Room">
+	    <id property="id" column="r_id"/>
+	    <result property="roomJid" column="r_room_jid"/>
+	    <result property="creator" column="r_creator"/>
+	    <result property="createTime" column="r_create_time"/>
+	    <result property="locked" column="r_locked"/>
+	    <association property="roomConfig" javaType="RoomConfig">
+	        <id property="id" column="rc_id"/>
+	    	<result property="roomId" column="rc_room_id"/>
+	    	<result property="roomName" column="rc_room_name"/>
+	    	<result property="roomDesc" column="rc_room_desc"/>
+	    	<result property="lang" column="rc_lang"/>
+	    	<result property="enableLogging" column="rc_enable_logging"/>
+	    	<result property="changeSubject" column="rc_change_subject"/>
+	    	<result property="allowInvites" column="rc_allow_invites"/>
+	    	<result property="allowPm" column="rc_allow_pm" typeHandler="EnumTypeHandler"/>
+	    	<result property="maxUsers" column="rc_max_users"/>
+	    	<result property="publicRoom" column="rc_public_room"/>
+	    	<result property="persistentRoom" column="rc_persistent_room"/>
+	    	<result property="moderatedRoom" column="rc_moderated_room"/>
+	    	<result property="membersOnly" column="rc_members_only"/>
+	    	<result property="passwordProtectedRoom" column="rc_password_protected_room"/>
+	    	<result property="roomSecret" column="rc_room_secret"/>
+	    	<result property="whoIs" column="rc_who_is" typeHandler="EnumTypeHandler"/>
+	    	<result property="maxHistoryFetch" column="rc_max_history_fetch"/>
+	    	<result property="pubSub" column="rc_pub_sub"/>
+	    	<association property="presenceBroadcast" javaType="PresenceBroadcast">
+	    	    <id property="id" column="rfpb_id"/>
+	    	    <result property="roomConfigId" column="rfpb_room_config_id"/>
+	    	    <result property="moderator" column="rfpb_moderator"/>
+	    	    <result property="participant" column="rfpb_participant"/>
+	    	    <result property="visitor" column="rfpb_visitor"/>
+	    	</association>
+			<association property="getMemberList" javaType="GetMemberList">
+	    	    <id property="id" column="rcgml_id"/>
+	    	    <result property="roomConfigId" column="rcgml_room_config_id"/>
+	    	    <result property="moderator" column="rcgml_moderator"/>
+	    	    <result property="participant" column="rcgml_participant"/>
+	    	    <result property="visitor" column="rcgml_visitor"/>
+	    	</association>
+	    </association>
+	</resultMap>
+	
+	<resultMap id="affiliatedUserResultMap" type="AffiliatedUser">
+	    <result property="jid" column="jid"/>
+	</resultMap>
+	
+	<select id="selectAffiliatedUsersByRoomId" resultMap="affiliatedUserResultMap">
+		SELECT * FROM ROOM_AFFILIATED_USERS WHERE room_id = #{arg0}
+	</select>
+    
+	<insert id="updateLocked">
+		UPDATE ROOMS SET locked=#{arg1} WHERE room_jid=#{arg0}
+	</insert>
+	
+	<insert id="insert" parameterType="Room">
+		INSERT INTO ROOMS(id, room_jid, creator) VALUES(#{id}, #{roomJid}, #{creator})
+	</insert>
+	
+	<insert id="insertRoomConfig" parameterType="RoomConfig">
+		INSERT INTO ROOM_CONFIGS(id, room_id, room_name, room_desc, lang, enable_logging, change_subject, allow_invites, allow_pm,
+			max_users, public_room, persistent_room, moderated_room, members_only, password_protected_room, room_secret,
+			who_is, max_history_fetch, pub_sub) VALUES(#{id}, #{roomId}, #{roomName}, #{roomDesc}, #{lang}, #{enableLogging},
+			#{changeSubject}, #{allowInvites}, #{allowPm, typeHandler=EnumTypeHandler}, #{maxUsers}, #{publicRoom},
+			#{persistentRoom}, #{moderatedRoom}, #{membersOnly}, #{passwordProtectedRoom}, #{roomSecret},
+			#{whoIs, typeHandler=EnumTypeHandler}, #{maxHistoryFetch}, #{pubSub})
+	</insert>
+	
+	<insert id="insertRoomConfigPresenceBroadcast" parameterType="PresenceBroadcast">
+		INSERT INTO ROOM_CONFIG_PRESENCE_BROADCASTS(id, room_config_id, moderator, participant, visitor) VALUES(#{id}, #{roomConfigId}, #{moderator}, #{participant}, #{visitor})
+	</insert>
+	
+	<insert id="insertRoomConfigGetMemberList" parameterType="GetMemberList">
+		INSERT INTO ROOM_CONFIG_GET_MEMBER_LISTS(id, room_config_id, moderator, participant, visitor) VALUES(#{id}, #{roomConfigId}, #{moderator}, #{participant}, #{visitor})
+	</insert>
+	
+	<insert id="insertRoomAffiliatedUser" parameterType="AffiliatedUser">
+		INSERT INTO ROOM_AFFILIATED_USERS(id, room_id, jid, affiliation, role, nick) VALUES(#{id}, #{roomId}, #{jid}, #{affiliation, typeHandler=EnumTypeHandler}, #{role, typeHandler=EnumTypeHandler}, #{nick})
+	</insert>
+	
+	<insert id="updateRoomConfig" parameterType="RoomConfig">
+		UPDATE ROOM_CONFIGS SET
+			room_name=#{roomName},
+			room_desc=#{roomDesc},
+			lang=#{lang},
+			enable_logging=#{enableLogging},
+			change_subject=#{changeSubject},
+			allow_invites=#{allowInvites},
+			allow_pm=#{allowPm, typeHandler=EnumTypeHandler},
+			max_users=#{maxUsers},
+			public_room=#{publicRoom},
+			persistent_room=#{persistentRoom},
+			moderated_room=#{moderatedRoom},
+			members_only=#{membersOnly},
+			password_protected_room=#{passwordProtectedRoom},
+			<if test="roomSecret != null">
+			    room_secret=#{roomSecret},
+			</if>
+			who_is=#{whoIs, typeHandler=EnumTypeHandler},
+			max_history_fetch=#{maxHistoryFetch},
+			pub_sub=#{pubSub}
+		WHERE
+			id=#{id}
+	</insert>
+	
+	<insert id="updateRoomAffiliatedUser" parameterType="AffiliatedUser">
+		UPDATE ROOM_AFFILIATED_USERS SET
+			affiliation=#{affiliation, typeHandler=EnumTypeHandler},
+			role=#{role, typeHandler=EnumTypeHandler},
+			nick=#{nick}
+		WHERE
+			id=#{id}
+	</insert>
+	
+	<insert id="updateRoomConfigPresenceBroadcast" parameterType="PresenceBroadcast">
+		UPDATE ROOM_CONFIG_PRESENCE_BROADCASTS SET
+			moderator=#{moderator},
+			participant=#{participant},
+			visitor=#{visitor}
+		WHERE
+			id=#{id}
+	</insert>
+	
+	<insert id="updateRoomConfigGetMemberList" parameterType="GetMemberList">
+		UPDATE ROOM_CONFIG_GET_MEMBER_LISTS SET
+			moderator=#{moderator},
+			participant=#{participant},
+			visitor=#{visitor}
+		WHERE
+			id=#{id}
+	</insert>
+	
+	<insert id="insertRoomSubjectHistory" parameterType="Subject">
+		INSERT INTO ROOM_SUBJECT_HISTORIES(id, room_id, subject, create_time) VALUES(#{id}, #{roomId}, #{subject}, #{createTime})
+	</insert>
+	
+	<select id="selectAffiliatedUserJidByNick" resultMap="affiliatedUserJidResultMap">
+		SELECT
+			RAU.jid
+		FROM ROOM_AFFILIATED_USERS RAU
+			LEFT OUTER JOIN ROOMS R ON
+				RAU.room_id = R.id
+		WHERE R.room_jid = #{arg0} AND RAU.nick = #{arg1}
+	</select>
+	
+	<resultMap id="affiliatedUserJidResultMap" type="JabberId">
+		<result property="jid" column="jid"/>
+	</resultMap>
+</mapper>

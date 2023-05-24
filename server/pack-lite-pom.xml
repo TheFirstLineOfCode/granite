@@ -1,0 +1,117 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+		http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.thefirstlineofcode.granite</groupId>
+		<artifactId>com.thefirstlineofcode.granite</artifactId>
+		<version>1.0.3-RELEASE</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>	
+	
+	<groupId>com.thefirstlineofcode.granite</groupId>
+	<artifactId>granite-server</artifactId>
+	<name>Granite Server Pack Lite Project</name>
+	
+	<properties>
+		<main.class>com.thefirstlineofcode.granite.server.Main</main.class>
+	</properties>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.10.1</version>
+				<configuration combine.self="override">
+					<annotationProcessorPaths>
+						<path>
+							<groupId>com.thefirstlineofcode.basalt</groupId>
+							<artifactId>basalt-xmpp-core</artifactId>
+							<version>1.1.0-RELEASE</version>
+						</path>
+					</annotationProcessorPaths>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>libs/</classpathPrefix>
+							<mainClass>${main.class}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.0.0</version>
+				<configuration>
+					<appendAssemblyId>false</appendAssemblyId>
+					<descriptors>
+						<descriptor>src/assembly/descriptor.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+		</dependency>
+		<dependency>
+				<groupId>com.thefirstlineofcode.granite.framework.adf</groupId>
+				<artifactId>granite-framework-adf-mybatis</artifactId>
+		</dependency>
+		<dependency>
+				<groupId>com.thefirstlineofcode.granite.pipeline</groupId>
+				<artifactId>granite-pipeline-stages-stream</artifactId>
+		</dependency>
+		<dependency>
+				<groupId>com.thefirstlineofcode.granite.pipeline</groupId>
+				<artifactId>granite-pipeline-stages-parsing</artifactId>
+		</dependency>
+		<dependency>
+				<groupId>com.thefirstlineofcode.granite.pipeline</groupId>
+				<artifactId>granite-pipeline-stages-processing</artifactId>
+		</dependency>
+		<dependency>
+				<groupId>com.thefirstlineofcode.granite.pipeline</groupId>
+				<artifactId>granite-pipeline-stages-routing</artifactId>
+		</dependency>
+		<dependency>
+				<groupId>com.thefirstlineofcode.granite.pipeline</groupId>
+				<artifactId>granite-pipeline-stages-event</artifactId>
+		</dependency>
+		<dependency>
+				<groupId>com.thefirstlineofcode.basalt</groupId>
+				<artifactId>basalt-xmpp-im</artifactId>
+		</dependency>
+		<dependency>
+				<groupId>com.thefirstlineofcode.sand.protocols</groupId>
+				<artifactId>sand-protocols-thing</artifactId>
+		</dependency>
+		
+	</dependencies>
+	
+</project>
+

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.thefirstlineofcode.granite</groupId>
+		<artifactId>granite-pack</artifactId>
+		<version>1.0.3-RELEASE</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	
+	<groupId>com.thefirstlineofcode.granite.pack.lite</groupId>
+	<artifactId>granite-pack-lite-standard</artifactId>
+	
+	<dependencies>
+			<!-- Granite Standard Stream Plugin -->
+			<dependency>
+				<groupId>com.thefirstlineofcode.granite.stream</groupId>
+				<artifactId>granite-stream-standard</artifactId>
+			</dependency>
+			
+			<!-- Granite XEPs plugins -->
+			<dependency>
+				<groupId>com.thefirstlineofcode.granite.xeps</groupId>
+				<artifactId>granite-xeps-ping</artifactId>
+			</dependency>
+			
+			<!-- Granite Deploy Lite Plugins -->
+			<dependency>
+					<groupId>com.thefirstlineofcode.granite.lite</groupId>
+					<artifactId>granite-lite-dba</artifactId>
+			</dependency>
+			<dependency>
+					<groupId>com.thefirstlineofcode.granite.lite</groupId>
+					<artifactId>granite-lite-session</artifactId>
+			</dependency>
+			<dependency>
+					<groupId>com.thefirstlineofcode.granite.lite</groupId>
+					<artifactId>granite-lite-pipeline</artifactId>
+			</dependency>
+			<dependency>
+					<groupId>com.thefirstlineofcode.granite.lite</groupId>
+					<artifactId>granite-lite-auth</artifactId>
+			</dependency>
+			<dependency>
+					<groupId>com.thefirstlineofcode.granite.lite.xeps</groupId>
+					<artifactId>granite-lite-xeps-ibr</artifactId>
+			</dependency>
+			<dependency>
+					<groupId>com.thefirstlineofcode.granite.lite</groupId>
+					<artifactId>granite-lite-im</artifactId>
+			</dependency>
+			<dependency>
+					<groupId>com.thefirstlineofcode.granite.lite.xeps</groupId>
+					<artifactId>granite-lite-xeps-disco</artifactId>
+			</dependency>
+			<dependency>
+					<groupId>com.thefirstlineofcode.granite.lite.xeps</groupId>
+					<artifactId>granite-lite-xeps-muc</artifactId>
+			</dependency>
+			<dependency>
+					<groupId>com.thefirstlineofcode.granite.lite.xeps</groupId>
+					<artifactId>granite-lite-xeps-msgoffline</artifactId>
+			</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.thefirstlineofcode.granite.lite.pack.Main</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

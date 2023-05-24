@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:thefirstlineofcode="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+        <groupId>com.thefirstlineofcode.granite</groupId>
+        <artifactId>granite-pipeline</artifactId>
+        <version>1.0.3-RELEASE</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+	
+	<groupId>com.thefirstlineofcode.granite.pipeline</groupId>
+	<artifactId>granite-pipeline-stages-stream</artifactId>
+	<name>Implemention for pipeline stream stage</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcprov-jdk15on</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcpkix-jdk15on</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.basalt</groupId>
+			<artifactId>basalt-oxm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.framework</groupId>
+			<artifactId>granite-framework-core</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

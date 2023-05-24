@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:thefirstlineofcode="http://maven.apache.org/POM/4.0.0
+		http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.thefirstlineofcode.granite</groupId>
+		<artifactId>com.thefirstlineofcode.granite</artifactId>
+		<version>1.0.3-RELEASE</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
+	<groupId>com.thefirstlineofcode.granite</groupId>
+	<artifactId>granite-xeps</artifactId>
+	<packaging>pom</packaging>
+	<name>XEPs plugins</name>
+
+	<modules>
+		<module>ibr</module>
+		<module>ping</module>
+		<module>xdata</module>
+		<module>rsm</module>
+		<module>address</module>
+		<module>delay</module>
+		<module>disco</module>
+		<module>muc</module>
+		<module>msgoffline</module>
+	</modules>
+
+</project>

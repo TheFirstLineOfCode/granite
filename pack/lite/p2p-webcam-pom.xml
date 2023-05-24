@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.thefirstlineofcode.granite</groupId>
+		<artifactId>granite-pack</artifactId>
+		<version>1.0.3-RELEASE</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	
+	<groupId>com.thefirstlineofcode.granite.pack.lite</groupId>
+	<artifactId>granite-pack-lite-p2p-webcam</artifactId>
+	
+	<dependencies>
+		<dependency>
+			<groupId>com.thefirstlineofcode.sand.server</groupId>
+			<artifactId>sand-server-p2p-webcam</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:thefirstlineofcode="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.thefirstlineofcode.granite</groupId>
+		<artifactId>granite-pack</artifactId>
+		<version>1.0.3-RELEASE</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	
+	<groupId>com.thefirstlineofcode.granite.pack</groupId>
+	<artifactId>granite-pack-lite</artifactId>
+	<name>Granite deploy lite packer</name>
+	
+	<dependencies>
+		<!-- Granite Server -->
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite</groupId>
+			<artifactId>granite-server</artifactId>
+		</dependency>
+		
+		<!-- Framework -->
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.framework</groupId>
+			<artifactId>granite-framework-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.framework.adf</groupId>
+			<artifactId>granite-framework-adf-mybatis</artifactId>
+		</dependency>
+		
+		<!-- Pipeline Stages -->
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.pipeline</groupId>
+			<artifactId>granite-pipeline-stages-stream</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.pipeline</groupId>
+			<artifactId>granite-pipeline-stages-parsing</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.pipeline</groupId>
+			<artifactId>granite-pipeline-stages-processing</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.pipeline</groupId>
+			<artifactId>granite-pipeline-stages-routing</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.pipeline</groupId>
+			<artifactId>granite-pipeline-stages-event</artifactId>
+		</dependency>
+		
+		<!-- Standard Stream Plugin -->
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.stream</groupId>
+			<artifactId>granite-stream-standard</artifactId>
+		</dependency>
+		
+		<!-- XEPs Plugins -->
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.xeps</groupId>
+			<artifactId>granite-xeps-ping</artifactId>
+		</dependency>
+		
+		<!-- Deploy Lite Plugins -->
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.lite</groupId>
+			<artifactId>granite-lite-dba</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.lite</groupId>
+			<artifactId>granite-lite-session</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.lite</groupId>
+			<artifactId>granite-lite-pipeline</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.lite</groupId>
+			<artifactId>granite-lite-auth</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.lite.xeps</groupId>
+			<artifactId>granite-lite-xeps-ibr</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.lite</groupId>
+			<artifactId>granite-lite-im</artifactId>
+		</dependency>
+		<dependency>
+				<groupId>com.thefirstlineofcode.granite.lite.xeps</groupId>
+				<artifactId>granite-lite-xeps-disco</artifactId>
+		</dependency>
+		<dependency>
+				<groupId>com.thefirstlineofcode.granite.lite.xeps</groupId>
+				<artifactId>granite-lite-xeps-muc</artifactId>
+		</dependency>
+		<dependency>
+				<groupId>com.thefirstlineofcode.granite.lite.xeps</groupId>
+				<artifactId>granite-lite-xeps-msgoffline</artifactId>
+		</dependency>
+		
+		<!-- Sand Stream Plugin -->
+		<dependency>
+			<groupId>com.thefirstlineofcode.sand.server</groupId>
+			<artifactId>sand-server-stream</artifactId>
+		</dependency>
+		
+		<!-- Sand Server Plugins -->
+		<dependency>
+			<groupId>com.thefirstlineofcode.sand.server</groupId>
+			<artifactId>sand-server-location</artifactId>
+		</dependency>			
+		<dependency>
+			<groupId>com.thefirstlineofcode.sand.server</groupId>
+			<artifactId>sand-server-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.sand.server</groupId>
+			<artifactId>sand-server-console</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.sand.server</groupId>
+			<artifactId>sand-server-operator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.sand.server</groupId>
+			<artifactId>sand-server-p2p-webcam</artifactId>
+		</dependency>
+		
+		<!-- Sand Deploy Lite Plugins -->
+		<dependency>
+			<groupId>com.thefirstlineofcode.sand.server.lite</groupId>
+			<artifactId>sand-server-lite-things</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.sand.server.lite</groupId>
+			<artifactId>sand-server-lite-ibtr</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.sand.server.lite</groupId>
+			<artifactId>sand-server-lite-concentrator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.sand.server.lite</groupId>
+			<artifactId>sand-server-lite-friends</artifactId>
+		</dependency>
+		
+		<!-- Sand Demo Plugins -->
+		<dependency>
+			<groupId>com.thefirstlineofcode.sand.demo</groupId>
+			<artifactId>sand-demo-server-lite</artifactId>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.thefirstlineofcode.granite.pack.lite.Main</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:thefirstlineofcode="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	
+    <parent>
+        <groupId>com.thefirstlineofcode.granite.lite</groupId>
+        <artifactId>granite-lite-xeps</artifactId>
+        <version>1.0.3-RELEASE</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+	
+	<groupId>com.thefirstlineofcode.granite.lite.xeps</groupId>
+	<artifactId>granite-lite-xeps-disco</artifactId>
+	<name>Granite lite XEPs Discovery implementation</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.xeps</groupId>
+			<artifactId>granite-xeps-disco</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.thefirstlineofcode.granite.framework</groupId>
+			<artifactId>granite-framework-im</artifactId>
+		</dependency>
+	</dependencies>
+
+</project>

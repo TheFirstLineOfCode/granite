@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thefirstlineofcode.granite.lite.im.SubscriptionMapper">
+	<select id="selectByUser" resultType="Subscription">
+		SELECT * FROM SUBSCRIPTIONS WHERE SUBSCRIPTIONS.user=#{arg0}
+    </select>
+    
+	<select id="selectByUserAndContact" resultType="Subscription">
+		SELECT * FROM SUBSCRIPTIONS WHERE SUBSCRIPTIONS.user=#{arg0} AND contact=#{arg1}
+    </select>
+    
+	<select id="selectCountByUserAndContact" resultType="int">
+		SELECT count(*) FROM SUBSCRIPTIONS WHERE SUBSCRIPTIONS.user=#{arg0} AND contact=#{arg1}
+    </select>
+    
+    <insert id="insert" parameterType="Subscription">
+        INSERT INTO SUBSCRIPTIONS(id, user, contact, name, state, groups) VALUES(#{id}, #{user}, #{contact}, #{name}, #{state, typeHandler=EnumTypeHandler}, #{groups})
+    </insert>
+    
+    <insert id="updateNameAndGroups">
+        UPDATE SUBSCRIPTIONS SET name=#{arg2}, groups=#{arg3} WHERE SUBSCRIPTIONS.user=#{arg0} AND contact=#{arg1}
+    </insert>
+    
+    <insert id="updateState">
+        UPDATE SUBSCRIPTIONS SET state=#{arg2, typeHandler=org.apache.ibatis.type.EnumTypeHandler} WHERE SUBSCRIPTIONS.user=#{arg0} AND contact=#{arg1}
+    </insert>
+    
+    <insert id="insertNotification" parameterType="SubscriptionNotification">
+        INSERT INTO SUBSCRIPTION_NOTIFICATIONS(id, user, contact, subscription_type) VALUES(#{id}, #{user}, #{contact}, #{subscriptionType, typeHandler=EnumTypeHandler})
+    </insert>
+    
+    <select id="selectNotificationsByUser" resultType="SubscriptionNotification">
+		SELECT * FROM SUBSCRIPTION_NOTIFICATIONS WHERE SUBSCRIPTION_NOTIFICATIONS.user=#{arg0}
+    </select>
+    
+    <select id="selectNotificationsByUserAndContact" resultType="SubscriptionNotification">
+		SELECT * FROM SUBSCRIPTION_NOTIFICATIONS WHERE SUBSCRIPTION_NOTIFICATIONS.user=#{arg0} AND contact=#{arg1}
+    </select>
+    
+    <delete id="deleteNotification" parameterType="SubscriptionNotification">
+        DELETE FROM SUBSCRIPTION_NOTIFICATIONS WHERE SUBSCRIPTION_NOTIFICATIONS.user=#{user} AND contact=#{contact} AND subscription_type=#{subscriptionType, typeHandler=EnumTypeHandler}
+    </delete>
+</mapper>

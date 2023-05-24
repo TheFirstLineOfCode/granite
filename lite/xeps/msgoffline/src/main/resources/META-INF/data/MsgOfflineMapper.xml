@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thefirstlineofcode.granite.lite.xeps.msgoffline.OfflineMessageMapper">
+	<insert id="insert" parameterType="OfflineMessage">
+		INSERT INTO OFFLINE_MESSAGES(id, message_id, message, jid) VALUES(#{id}, #{messageId}, #{message}, #{jid})
+	</insert>
+	
+	<select id="selectByJid" resultType="OfflineMessage">
+		SELECT * FROM OFFLINE_MESSAGES WHERE jid=#{arg0} LIMIT #{arg1} OFFSET #{arg2}
+    </select>
+    
+	<select id="selectCountByJid" resultType="int">
+		SELECT count(*) FROM OFFLINE_MESSAGES WHERE jid=#{arg0}
+    </select>
+    
+    <delete id="deleteByJidAndMessageId">
+        DELETE FROM OFFLINE_MESSAGES WHERE jid=#{arg0} AND message_id=#{arg1}
+    </delete>
+</mapper>

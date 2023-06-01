@@ -101,9 +101,9 @@
 
 	<repositories>
 		<repository>
-			<id>com.thefirstlineofcode.public</id>
-			<name>TheFirstLineOfCode Repository - Public</name>
-			<url>http://120.25.166.188/repository/maven-public/</url>
+			<id>com.thefirstlineofcode.releases</id>
+			<name>TheFirstLineOfCode Repository - Releases</name>
+			<url>http://120.25.166.188:9090/repository/maven-releases/</url>
 		</repository>
 		<repository>
                         <id>jcenter</id>
@@ -742,9 +742,9 @@
 	
 	<distributionManagement>
                 <repository>
-                        <id>com.thefirstlineofcode.public</id>
-                        <name>thefirstlineofcode Repository - Public</name>
-                        <url>http://120.25.166.188/repository/maven-public/</url>
+                        <id>com.thefirstlineofcode.releases</id>
+                        <name>thefirstlineofcode Repository - Releases</name>
+                        <url>http://120.25.166.188:9090/repository/maven-releases/</url>
                 </repository>
         </distributionManagement>
 </project>

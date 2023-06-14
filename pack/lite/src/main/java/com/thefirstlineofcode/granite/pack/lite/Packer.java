@@ -94,7 +94,7 @@ public class Packer {
 					int lastSlash = entryName.lastIndexOf('/');
 					String libraryName = entryName.substring(lastSlash + 1);
 					if (libraryName.startsWith(SAND_PROJECT_PREFIX) &&
-							options.getProtocol() != Protocol.SAND)
+							options.getProtocol() != Protocol.IOT)
 						continue;
 					systemLibraries.add(libraryName);
 				}
@@ -212,7 +212,7 @@ public class Packer {
 		} else if (options.getProtocol() == Options.Protocol.STANDARD) {
 			PackUtils.runMvn(new File(options.getProjectDirPath()), options.isOffline(), "-fstandard-pom.xml", "dependency:copy-dependencies");
 		} else {
-			PackUtils.runMvn(new File(options.getProjectDirPath()), options.isOffline(), "-fsand-pom.xml", "dependency:copy-dependencies");
+			PackUtils.runMvn(new File(options.getProjectDirPath()), options.isOffline(), "-fiot-pom.xml", "dependency:copy-dependencies");
 			
 			if (options.getWebcamMode() == WebcamMode.P2P) {
 				PackUtils.runMvn(new File(options.getProjectDirPath()), options.isOffline(), "-fp2p-webcam-pom.xml", "dependency:copy-dependencies");
@@ -237,14 +237,14 @@ public class Packer {
 			configurationFilesDir = new File(configurationDir, "mini");
 		} else if (options.getProtocol() == Options.Protocol.STANDARD) {
 			configurationFilesDir = new File(configurationDir, "standard");
-		} else if (options.getProtocol() == Options.Protocol.SAND) {
-			configurationFilesDir = new File(configurationDir, "sand");	
+		} else if (options.getProtocol() == Options.Protocol.IOT) {
+			configurationFilesDir = new File(configurationDir, "iot");	
 		} else {
-			throw new IllegalArgumentException("Only support 'mini', 'standard' and 'sand' protocols now.");
+			throw new IllegalArgumentException("Only support 'mini', 'standard' and 'iot' protocols now.");
 		}
 		
 		for (File configurationFile : configurationFilesDir.listFiles()) {
-			writeFileToZip(zos, String.format("/%s/%s/%s", options.getAppName(), CONFIGURATION_DIR, configurationFile.getName()), configurationFile);
+			writeFileToZip(zos, String.format("%s/%s/%s", options.getAppName(), CONFIGURATION_DIR, configurationFile.getName()), configurationFile);
 		}
 	}
 	

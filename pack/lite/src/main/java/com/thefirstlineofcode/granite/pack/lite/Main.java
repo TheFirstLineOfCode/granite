@@ -94,10 +94,10 @@ public class Main {
 					options.setProtocol(Options.Protocol.MINI);
 				} else if ("standard".equals(args[i])) {
 					options.setProtocol(Options.Protocol.STANDARD);
-				} else if ("sand".equals(args[i])) {
-					options.setProtocol(Options.Protocol.SAND);
+				} else if ("iot".equals(args[i])) {
+					options.setProtocol(Options.Protocol.IOT);
 				} else {
-					throw new IllegalArgumentException(String.format("Illegal protocol: %s. Only 'mini', 'standard' and 'sand' are supported.", args[i]));
+					throw new IllegalArgumentException(String.format("Illegal protocol: %s. Only 'mini', 'standard' and 'iot' are supported.", args[i]));
 				}
 				i++;
 			} else if ("-webcamMode".equals(args[i])) {
@@ -182,7 +182,7 @@ public class Main {
 		System.out.println("-cleanCache                            Clean the packing cache.");
 		System.out.println("-offline                               Run in offline mode.");
 		// System.out.println("-version <VERSION>                     Specify the version. Default is 1.0.2-RELEASE.");
-		System.out.println("-protocol <PROTOCOL>                   Specify the protocol. Optional protocols are 'mini', 'standard' or 'sand'. Default is 'standard'.");
+		System.out.println("-protocol <PROTOCOL>                   Specify the protocol. Optional protocols are 'mini', 'standard' or 'iot'. Default is 'standard'.");
 		System.out.println("-webcamMode <WEBCAM-MODE>              Specify that which webcam plugin needs to be deployed. Optional plugins are 'none', 'p2p', 'kurento'. Default is 'none'.");
 		System.out.println("-sandProjectName <SAND-PROJECT-NAME>   Specify the sand project name. Default is 'com.thefirstlineofcode.sand'.");
 	}

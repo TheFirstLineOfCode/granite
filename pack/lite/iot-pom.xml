@@ -13,7 +13,7 @@
 	</parent>
 	
 	<groupId>com.thefirstlineofcode.granite.pack.lite</groupId>
-	<artifactId>granite-pack-lite-sand</artifactId>
+	<artifactId>granite-pack-lite-iot</artifactId>
 	
 		<dependencies>
 			<!-- Sand Stream Plugin -->

@@ -21,7 +21,7 @@ import com.thefirstlineofcode.granite.framework.im.IResource;
 import com.thefirstlineofcode.granite.framework.im.IResourcesRegister;
 import com.thefirstlineofcode.granite.framework.im.IResourcesService;
 import com.thefirstlineofcode.granite.framework.im.ISubscriptionService;
-import com.thefirstlineofcode.granite.framework.im.ResourceAvailabledEvent;
+import com.thefirstlineofcode.granite.framework.im.ResourceAvailableEvent;
 import com.thefirstlineofcode.granite.framework.im.Subscription;
 import com.thefirstlineofcode.granite.framework.im.Subscription.State;
 
@@ -108,7 +108,7 @@ public class StandardPresenceProcessor implements IPresenceProcessor, IEventFire
 			throw new ProtocolException(new InternalServerError("Can't set resource to be available.", e));
 		}
 		
-		eventFirer.fire(new ResourceAvailabledEvent(user));
+		eventFirer.fire(new ResourceAvailableEvent(user));
 		
 		List<Subscription> subscriptions = subscriptionService.get(user.getNode());
 		for (Subscription subscription : subscriptions) {

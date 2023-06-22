@@ -52,4 +52,9 @@ public class AccountManager implements IAccountManager {
 		return database.getCollection("users");
 	}
 
+	@Override
+	public void add(String userName, String password) {
+		throw new UnsupportedOperationException();
+	}
+
 }

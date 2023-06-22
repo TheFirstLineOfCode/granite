@@ -1,5 +1,7 @@
 package com.thefirstlineofcode.granite.lite.auth;
 
+import java.util.UUID;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,6 +39,16 @@ public class AccountManager implements IAccountManager {
 	@Override
 	public Account get(String name) {
 		return getMapper().selectByName(name);
+	}
+
+	@Override
+	public void add(String userName, String password) {
+		D_Account account = new D_Account();
+		account.setId(UUID.randomUUID().toString());
+		account.setName(userName);
+		account.setPassword(password);
+		
+		add(account);
 	}
 
 }

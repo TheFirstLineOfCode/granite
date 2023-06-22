@@ -12,10 +12,10 @@ import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.IEven
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.IEventListener;
 import com.thefirstlineofcode.granite.framework.im.IOfflineMessageStore;
 import com.thefirstlineofcode.granite.framework.im.OfflineMessage;
-import com.thefirstlineofcode.granite.framework.im.ResourceAvailabledEvent;
+import com.thefirstlineofcode.granite.framework.im.ResourceAvailableEvent;
 
-public class ResourceAvailabledListener implements IConfigurationAware,
-			IEventListener<ResourceAvailabledEvent> {
+public class ResourceAvailableListener implements IConfigurationAware,
+			IEventListener<ResourceAvailableEvent> {
 	private static final String CONFIGURATION_KEY_DISABLED = "disabled";
 	
 	private boolean disabled;
@@ -24,7 +24,7 @@ public class ResourceAvailabledListener implements IConfigurationAware,
 	private IOfflineMessageStore offlineMessageStore;
 		
 	@Override
-	public void process(IEventContext context, ResourceAvailabledEvent event) {
+	public void process(IEventContext context, ResourceAvailableEvent event) {
 		JabberId resource = event.getJid();
 		
 		processOfflineMessages(context, resource, resource);

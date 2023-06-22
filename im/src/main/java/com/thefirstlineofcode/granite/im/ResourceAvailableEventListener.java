@@ -9,16 +9,16 @@ import com.thefirstlineofcode.granite.framework.core.annotations.BeanDependency;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.IEventContext;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.IEventListener;
 import com.thefirstlineofcode.granite.framework.im.ISubscriptionService;
-import com.thefirstlineofcode.granite.framework.im.ResourceAvailabledEvent;
+import com.thefirstlineofcode.granite.framework.im.ResourceAvailableEvent;
 import com.thefirstlineofcode.granite.framework.im.SubscriptionNotification;
 import com.thefirstlineofcode.granite.framework.im.SubscriptionType;
 
-public class ResourceAvailabledEventListener implements IEventListener<ResourceAvailabledEvent> {
+public class ResourceAvailableEventListener implements IEventListener<ResourceAvailableEvent> {
 	@BeanDependency
 	private ISubscriptionService subscriptionService;
 
 	@Override
-	public void process(IEventContext context, ResourceAvailabledEvent event) {
+	public void process(IEventContext context, ResourceAvailableEvent event) {
 		JabberId user = event.getJid();
 		List<SubscriptionNotification> notifications = subscriptionService.getNotificationsByUser(user.getNode());
 		

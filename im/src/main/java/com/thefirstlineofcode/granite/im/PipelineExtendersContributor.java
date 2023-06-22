@@ -11,7 +11,7 @@ import com.thefirstlineofcode.granite.framework.core.pipeline.stages.IPipelineEx
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.PipelineExtendersConfigurator;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.parsing.ProtocolParserFactory;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.routing.ProtocolTranslatorFactory;
-import com.thefirstlineofcode.granite.framework.im.ResourceAvailabledEvent;
+import com.thefirstlineofcode.granite.framework.im.ResourceAvailableEvent;
 import com.thefirstlineofcode.granite.framework.im.SessionListener;
 
 @Extension
@@ -29,7 +29,7 @@ public class PipelineExtendersContributor extends PipelineExtendersConfigurator 
 				new ProtocolTranslatorFactory<>(Roster.class, new RosterTranslatorFactory())
 		);
 		configurator.registerEventListener(
-				ResourceAvailabledEvent.class, new ResourceAvailabledEventListener()
+				ResourceAvailableEvent.class, new ResourceAvailableEventListener()
 		);
 		configurator.registerSessionListener(new SessionListener());
 	}

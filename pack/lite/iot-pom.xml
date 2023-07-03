@@ -36,10 +36,6 @@
 					<artifactId>granite-lite-pipeline</artifactId>
 			</dependency>
 			<dependency>
-				<groupId>com.thefirstlineofcode.granite.lite.xeps</groupId>
-				<artifactId>granite-lite-xeps-ibr</artifactId>
-			</dependency>
-			<dependency>
 					<groupId>com.thefirstlineofcode.granite.lite</groupId>
 					<artifactId>granite-lite-auth</artifactId>
 			</dependency>

@@ -5,7 +5,7 @@ import java.util.Arrays;
 import com.thefirstlineofcode.granite.pack.lite.Options.WebcamMode;
 
 public class Main {
-	private static final String DEFAULT_VERSION = "1.0.3-RELEASE";
+	private static final String DEFAULT_VERSION = "1.0.4-RELEASE";
 	private static final String NAME_PREFIX_APP = "granite-lite";
 	private static final String DEFAULT_SAND_PROJECT_NAME = "sand";
 	

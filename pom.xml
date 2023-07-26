@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<springframework.version>5.2.9.RELEASE</springframework.version>
 		<basalt.version>1.1.0-RELEASE</basalt.version>
-		<granite.version>1.0.3-RELEASE</granite.version>
+		<granite.version>1.0.4-RELEASE</granite.version>
 		<sand.version>1.0.0-BETA3</sand.version>
 		<gem.version>0.2.0-RELEASE</gem.version>
 		<netty.version>4.1.77.Final</netty.version>

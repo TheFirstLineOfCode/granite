@@ -393,6 +393,11 @@ public class DefaultProtocolProcessingProcessor implements com.thefirstlineofcod
 						new Object[] {context.getJid(), stanza, stanza.getOriginalMessage()});
 			}
 			
+			if (FlawedProtocolObject.isFlawed(stanza)) {
+				logger.error("Flawed project object. Ignore to process it. Session JID: {}. Protocol object: {}.", context.getJid(), stanza);
+				throw new ProtocolException(new BadRequest(String.format("Ignore to process flawed project object: %s.", stanza)));
+			}
+			
 			// Try to process stanza in a more simply way if it's a simple structure stanza. 
 			if (processSimpleStanza(context, stanza)) {
 				if (logger.isDebugEnabled()) {
@@ -401,11 +406,6 @@ public class DefaultProtocolProcessingProcessor implements com.thefirstlineofcod
 				}
 				
 				return;
-			}
-			
-			if (FlawedProtocolObject.isFlawed(stanza)) {
-				logger.error("Flawed project object. Ignore to process it. Session JID: {}. Protocol object: {}.", context.getJid(), stanza);
-				throw new ProtocolException(new BadRequest(String.format("Ignore to process flawed project object: %s.", stanza)));
 			}
 			
 			if (stanza.getObjects().size() == 1) {				

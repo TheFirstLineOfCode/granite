@@ -8,19 +8,21 @@ import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.Event
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.IEvent;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.IEventListener;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.IEventListenerFactory;
+import com.thefirstlineofcode.granite.framework.core.pipeline.stages.parsing.CocProtocolParserFactory;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.parsing.IPipelinePreprocessor;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.parsing.IProtocolParserFactory;
-import com.thefirstlineofcode.granite.framework.core.pipeline.stages.parsing.CocProtocolParserFactory;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.processing.IIqResultProcessor;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.processing.IXepProcessor;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.processing.IXepProcessorFactory;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.processing.SingletonXepProcessorFactory;
+import com.thefirstlineofcode.granite.framework.core.pipeline.stages.routing.CocProtocolTranslatorFactory;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.routing.IPipelinePostprocessor;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.routing.IProtocolTranslatorFactory;
-import com.thefirstlineofcode.granite.framework.core.pipeline.stages.routing.CocProtocolTranslatorFactory;
+import com.thefirstlineofcode.granite.framework.core.repository.IInitializable;
 import com.thefirstlineofcode.granite.framework.core.session.ISessionListener;
 
-public abstract class PipelineExtendersConfigurator implements IPipelineExtendersContributor, IPipelineExtendersConfigurator {
+public abstract class PipelineExtendersConfigurator implements IPipelineExtendersContributor,
+			IPipelineExtendersConfigurator, IInitializable {
 	protected List<IProtocolParserFactory<?>> parserFactories;
 	protected List<IXepProcessorFactory<?, ?>> xepProcessorFactories;
 	protected List<IProtocolTranslatorFactory<?>> translatorFactories;
@@ -46,7 +48,10 @@ public abstract class PipelineExtendersConfigurator implements IPipelineExtender
 		
 		iqResultProcessors = new ArrayList<>();
 		sessionListeners = new ArrayList<>();
-		
+	}
+	
+	@Override
+	public void init() {
 		configure(this);
 	}
 	

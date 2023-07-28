@@ -118,10 +118,6 @@ public class CommonUtils {
 		if (extendersContributors == null || extendersContributors.size() == 0)
 			return new IPipelineExtendersContributor[0];
 		
-		for (IPipelineExtendersContributor extendersContributor : extendersContributors) {
-			appComponentService.inject(extendersContributor);
-		}
-		
 		return extendersContributors.toArray(new IPipelineExtendersContributor[extendersContributors.size()]);
 	}
 	

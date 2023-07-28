@@ -378,14 +378,12 @@ public class StandardClientMessageProcessor implements IClientMessageProcessor, 
 	}
 	
 	private void loadContributedSessionListeners() {
-		List<Class<? extends IPipelineExtendersContributor>> contributorClasses = appComponentService.
-				getExtensionClasses(IPipelineExtendersContributor.class);
-		if (contributorClasses == null || contributorClasses.size() == 0) {
+		IPipelineExtendersContributor[] contributors = CommonUtils.getExtendersContributors(appComponentService);
+		if (contributors == null || contributors.length == 0) {
 			return;
 		}
 		
-		for (Class<? extends IPipelineExtendersContributor> contributorClass : contributorClasses) {
-			IPipelineExtendersContributor contributor = appComponentService.createExtension(contributorClass);
+		for (IPipelineExtendersContributor contributor: contributors) {
 			ISessionListener[] sessionListeners = contributor.getSessionListeners();
 			if (sessionListeners == null || sessionListeners.length == 0)
 				continue;

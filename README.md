@@ -33,10 +33,5 @@ Granite XMPP Server是一个实现XMPP协议的IM服务器，具备以下特征�
 
 请阅读[《安装手册》](./docs/HOW_TO_INSTALL.md)
 
-##### 进阶使用
-
-请阅读《用户手册》(Coming soon....)
-
-##### 插件开发
-
-请阅读《开发者手册》(Coming soon....)
+##### Granite开发
+《开发者手册》(Coming soon... ...)

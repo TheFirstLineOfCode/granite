@@ -2,6 +2,7 @@ package com.thefirstlineofcode.granite.pack.lite;
 
 import java.util.Arrays;
 
+import com.thefirstlineofcode.granite.pack.lite.Options.Protocol;
 import com.thefirstlineofcode.granite.pack.lite.Options.WebcamMode;
 
 public class Main {
@@ -155,6 +156,14 @@ public class Main {
 			options.setVersion(DEFAULT_VERSION);
 		}
 		
+		if (options.getWebcamMode() == null) {			
+			if (options.getProtocol() == Protocol.IOT) {
+				options.setWebcamMode(WebcamMode.P2P);
+			} else {
+				options.setWebcamMode(WebcamMode.NONE);
+			}
+		}
+		
 		options.setAppName(String.format("%s-%s-%s", NAME_PREFIX_APP, options.getProtocol().toString().toLowerCase(), options.getVersion()));
 		
 		if (!options.isUpdate() && !options.isCleanUpdate() && options.getProtocol() == null) {
@@ -181,7 +190,7 @@ public class Main {
 		System.out.println("-cleanUpdate                           Clean and update specified modules.");
 		System.out.println("-cleanCache                            Clean the packing cache.");
 		System.out.println("-offline                               Run in offline mode.");
-		// System.out.println("-version <VERSION>                     Specify the version. Default is 1.0.2-RELEASE.");
+		// System.out.println("-version <VERSION>                     Specify the version. Default is 1.0.4-RELEASE.");
 		System.out.println("-protocol <PROTOCOL>                   Specify the protocol. Optional protocols are 'mini', 'standard' or 'iot'. Default is 'standard'.");
 		System.out.println("-webcamMode <WEBCAM-MODE>              Specify that which webcam plugin needs to be deployed. Optional plugins are 'none', 'p2p', 'kurento'. Default is 'none'.");
 		System.out.println("-sandProjectName <SAND-PROJECT-NAME>   Specify the sand project name. Default is 'com.thefirstlineofcode.sand'.");

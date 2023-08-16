@@ -38,7 +38,7 @@ public class Options {
 		protocol = Protocol.STANDARD;
 		commerical = false;
 		offline = false;
-		webcamMode = WebcamMode.NONE;
+		webcamMode = null;
 	}
 	
 	public boolean isHelp() {

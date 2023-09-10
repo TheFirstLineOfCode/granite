@@ -28,7 +28,7 @@ public class Main {
 		}
 		
 		// set log directory for logback(see logback.xml)
-		System.setProperty("appnode.log.dir", options.getHomeDir() + "/log");
+		System.setProperty("appnode.logs.dir", options.getHomeDir() + "/logs");
 		
 		try {
 			new Starter().start(options);

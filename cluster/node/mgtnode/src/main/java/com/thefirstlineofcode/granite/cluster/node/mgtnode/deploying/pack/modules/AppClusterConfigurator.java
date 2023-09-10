@@ -11,7 +11,7 @@ import java.util.Properties;
 
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlan;
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.Global;
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.IoUtils;
+import com.thefirstlineofcode.granite.cluster.node.commons.utils.NodeUtils;
 import com.thefirstlineofcode.granite.cluster.node.commons.utils.SectionalProperties;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.deploying.pack.IPackConfigurator;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.deploying.pack.IPackContext;
@@ -36,7 +36,7 @@ public class AppClusterConfigurator implements IPackConfigurator {
 		} catch (IOException e) {
 			throw new RuntimeException("Can't read clustering.ini.", e);
 		} finally {
-			IoUtils.close(in);
+			NodeUtils.close(in);
 		}
 		
 		configureGlobalParams(context, defaultClusteringConfig, configuration.getGlobal());

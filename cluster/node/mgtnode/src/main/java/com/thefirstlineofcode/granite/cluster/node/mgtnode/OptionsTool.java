@@ -28,6 +28,21 @@ public class OptionsTool extends AbstractOptionsTool<Options> {
 					setRange(OptionRule.Range.BOTH).
 					setDataType(OptionRule.DataType.BOOLEAN));
 		
+		optionRules.put("debug",
+				new OptionRule().
+					setRange(OptionRule.Range.BOTH).
+					setDataType(OptionRule.DataType.BOOLEAN));
+		
+		optionRules.put("debug-port",
+				new OptionRule().
+					setRange(OptionRule.Range.BOTH).
+					setDataType(OptionRule.DataType.INTEGER));
+		
+		optionRules.put("run-mode",
+				new OptionRule().
+				setRange(OptionRule.Range.COMMAND_LINE).
+				setDataType(OptionRule.DataType.STRING));
+		
 		return optionRules;
 	}
 
@@ -45,6 +60,8 @@ public class OptionsTool extends AbstractOptionsTool<Options> {
 		System.out.println("--configuration-dir=CONFIGURATION_DIR  Specify the path of configuration directory.");
 		System.out.println("--repository-dir=REPOSITORY_DIR        Specify the path of repository directory.");
 		System.out.println("--repack                               Repack the runtime packages.");
+		System.out.println("--debug                                Run JDWP.");
+		System.out.println("--debug-port                           Repack the runtime packages.");
 	}
 
 }

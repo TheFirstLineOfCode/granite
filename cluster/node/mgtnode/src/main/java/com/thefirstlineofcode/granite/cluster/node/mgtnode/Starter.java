@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,22 +25,18 @@ import org.slf4j.LoggerFactory;
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlan;
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlanException;
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlanReader;
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.IoUtils;
+import com.thefirstlineofcode.granite.cluster.node.commons.utils.NodeUtils;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.deploying.pack.AppnodeRuntimesPacker;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.deploying.pack.IAppnodeRuntimesPacker;
 
-public class Starter implements Serializable {
-	private static final String FILE_NAME_DEPLOY_PLAN_CHECKSUM = "deploy-plan-checksum.txt";
-
-	private static final long serialVersionUID = -6753095799926138420L;
-
-	private static final String FILE_NAME_DEPLOY_PLAN = "deploy-plan.ini";
-	
+public class Starter {
 	private static final Logger logger = LoggerFactory.getLogger(Starter.class);
+	
+	private static final String FILE_NAME_DEPLOY_PLAN_CHECKSUM = "deploy-plan-checksum.txt";
+	private static final String FILE_NAME_DEPLOY_PLAN = "deploy-plan.ini";
 
 	// Jetty HTTP Server
 	private Server server;
-	
 	private ConsoleThread consoleThread;
 	
 	public boolean start(Options options) throws Exception {
@@ -124,7 +119,7 @@ public class Starter implements Serializable {
 			planChanged = true;
 		} else {
 			try {
-				String localDeployPlanChecksum = IoUtils.readFile(localDeployPlanChecksumFilePath);
+				String localDeployPlanChecksum = NodeUtils.readFile(localDeployPlanChecksumFilePath);
 				if (!deployPlan.getChecksum().equals(localDeployPlanChecksum)) {
 					planChanged = true;
 				}
@@ -150,7 +145,7 @@ public class Starter implements Serializable {
 		
 		try {
 			logger.info("Saving the deploy plan checksum to local.");
-			IoUtils.writeToFile(deployPlan.getChecksum(), localDeployPlanChecksumFilePath);
+			NodeUtils.writeToFile(deployPlan.getChecksum(), localDeployPlanChecksumFilePath);
 		} catch (IOException e) {
 			throw new RuntimeException("Can't write the deploy plan checksum to local.", e);
 		}

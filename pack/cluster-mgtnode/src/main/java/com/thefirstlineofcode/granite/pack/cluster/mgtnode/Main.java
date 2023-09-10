@@ -3,7 +3,7 @@ package com.thefirstlineofcode.granite.pack.cluster.mgtnode;
 import java.util.Arrays;
 
 public class Main {
-	private static final String DEFAULT_VERSION = "0.2.1.RELEASE";
+	private static final String DEFAULT_VERSION = "1.0.4-RELEASE";
 	private static final String NAME_PREFIX_APP = "granite-cluster-node-mgtnode-";
 	
 	public static void main(String[] args) {
@@ -64,18 +64,6 @@ public class Main {
 			} else if ("-cleanCache".equals(args[i])) {
 				options.setCleanCache(true);
 				i++;
-			} else if ("-version".equals(args[i])) {
-				if (i == (args.length - 1)) {
-					throw new IllegalArgumentException("-version should follow a [VERSION] option value.");
-				}
-				i++;
-				
-				if (args[i].startsWith("-")) {
-					throw new IllegalArgumentException("-version should follow a [VERSION] option value.");
-				}
-				
-				options.setVersion(args[i]);
-				i++;
 			} else if ("-repositoryDir".equals(args[i])) {
 				if (i == (args.length - 1)) {
 					throw new IllegalArgumentException("-repositorDir should follow a [REPOSITORY_DIR] option value.");
@@ -133,6 +121,5 @@ public class Main {
 		System.out.println("-cleanCache                      Clean the packing cache.");
 		System.out.println("-repositoryDir REPOSITORY_DIR    Specify the path of repository directory.");
 		System.out.println("-offline                         Run in offline mode.");
-		System.out.println("-version VERSION                 Specify the version(Default is 0.2.1-RELEASE).");
 	}
 }

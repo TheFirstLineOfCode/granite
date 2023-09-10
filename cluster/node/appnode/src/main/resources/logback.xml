@@ -1,7 +1,7 @@
 <configuration>
 	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${appnode.log.dir}/appnode.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${appnode.logs.dir}/appnode.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>30</maxHistory>
 		</rollingPolicy>
 		<encoder>

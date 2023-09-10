@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlan;
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.Global;
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.StringUtils;
+import com.thefirstlineofcode.granite.cluster.node.commons.utils.NodeUtils;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.deploying.pack.IPackConfigurator;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.deploying.pack.IPackContext;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.deploying.pack.config.ConfigFiles;
@@ -52,7 +52,7 @@ public class FrameworkCoreConfigurator implements IPackConfigurator {
 		
 		String[] domainAliasNames = context.getDeployPlan().getCluster().getDomainAliasNames();
 		if (domainAliasNames != null && domainAliasNames.length != 0) {
-			config.addOrUpdateProperty("domain.alias.names", StringUtils.arrayToString(domainAliasNames));
+			config.addOrUpdateProperty("domain.alias.names", NodeUtils.arrayToString(domainAliasNames));
 		}
 		
 		config.addOrUpdateProperty("component.binding.profile", "${config.dir}/" + ConfigFiles.GRANITE_COMPONENT_BINDING_CONFIG_FILE);

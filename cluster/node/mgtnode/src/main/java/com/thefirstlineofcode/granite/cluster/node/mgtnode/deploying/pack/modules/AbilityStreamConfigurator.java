@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlan;
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.NodeType;
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.StringUtils;
+import com.thefirstlineofcode.granite.cluster.node.commons.utils.NodeUtils;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.deploying.pack.IPackConfigurator;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.deploying.pack.IPackContext;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.deploying.pack.config.ConfigFiles;
@@ -59,7 +59,7 @@ public class AbilityStreamConfigurator implements IPackConfigurator {
 		}
 		
 		if (properties.getProperty("sasl-supported-mechanisms") != null) {
-			saslSupportedMechanisms = StringUtils.stringToArray(properties.getProperty("sasl-supported-mechanisms"));
+			saslSupportedMechanisms = NodeUtils.stringToArray(properties.getProperty("sasl-supported-mechanisms"));
 			
 			for (String mechanism : saslSupportedMechanisms) {
 				if (!"PLAIN".equals(mechanism) &&
@@ -74,7 +74,7 @@ public class AbilityStreamConfigurator implements IPackConfigurator {
 			config.addOrUpdateProperty("tls.required", Boolean.toString(tlsRequired));
 		
 		if (saslSupportedMechanisms != null)
-			config.addOrUpdateProperty("sasl.supported.mechanisms", StringUtils.arrayToString(saslSupportedMechanisms));
+			config.addOrUpdateProperty("sasl.supported.mechanisms", NodeUtils.arrayToString(saslSupportedMechanisms));
 	}
 
 	protected void configureSocketAddressAndConnectionTimeout(IConfig config, Properties properties) {

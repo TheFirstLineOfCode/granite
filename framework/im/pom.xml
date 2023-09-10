@@ -18,10 +18,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.thefirstlineofcode.basalt</groupId>
-			<artifactId>basalt-oxm</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.thefirstlineofcode.granite.framework</groupId>
 			<artifactId>granite-framework-core</artifactId>
 		</dependency>

@@ -3,7 +3,7 @@ package com.thefirstlineofcode.granite.cluster.node.commons.deploying;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.StringUtils;
+import com.thefirstlineofcode.granite.cluster.node.commons.utils.NodeUtils;
 
 public class DeployPlan {
 	private Cluster cluster;
@@ -55,7 +55,7 @@ public class DeployPlan {
 			nodeTypeStrings[i++] = nodeType.toString();
 		}
 		
-		String[] sortedNodeTypeStrings = StringUtils.sort(nodeTypeStrings);
+		String[] sortedNodeTypeStrings = NodeUtils.sort(nodeTypeStrings);
 		
 		StringBuilder nodeTypesStringBuilder = new StringBuilder();
 		for (String nodeTypeString : sortedNodeTypeStrings) {
@@ -63,7 +63,7 @@ public class DeployPlan {
 		}
 		nodeTypesStringBuilder.deleteCharAt(nodeTypesStringBuilder.length() - 1);
 		
-		return StringUtils.getChecksum(cluster.toString() + "-" + global.toString() + "-" + nodeTypesStringBuilder.toString());
+		return NodeUtils.getChecksum(cluster.toString() + "-" + global.toString() + "-" + nodeTypesStringBuilder.toString());
 	}
 	
 	public String getAppnodeRuntimeString(String nodeTypeName) {
@@ -81,7 +81,7 @@ public class DeployPlan {
 	}
 	
 	public String getChecksum(String nodeTypeName) {
-		return StringUtils.getChecksum(getAppnodeRuntimeString(nodeTypeName));
+		return NodeUtils.getChecksum(getAppnodeRuntimeString(nodeTypeName));
 	}
 	
 }

@@ -98,7 +98,7 @@ public class SectionalProperties {
 				sections.add(new Section(sectionName, loadProperties(sectionContent.toString())));
 			}
 		} finally {
-			IoUtils.close(in);
+			NodeUtils.close(in);
 		}
 	}
 
@@ -178,7 +178,7 @@ public class SectionalProperties {
 				outputStream.flush();
 			}
 		} finally {
-			IoUtils.close(outputStream);
+			NodeUtils.close(outputStream);
 		}
 		
 	}

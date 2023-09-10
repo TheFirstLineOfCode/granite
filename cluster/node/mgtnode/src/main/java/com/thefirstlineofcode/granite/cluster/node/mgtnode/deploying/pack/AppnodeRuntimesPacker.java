@@ -19,11 +19,9 @@ import org.slf4j.LoggerFactory;
 
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlan;
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.NodeType;
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.IoUtils;
+import com.thefirstlineofcode.granite.cluster.node.commons.utils.NodeUtils;
 import com.thefirstlineofcode.granite.cluster.node.commons.utils.SectionalProperties;
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.StringUtils;
 import com.thefirstlineofcode.granite.cluster.node.commons.utils.TargetExistsException;
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.ZipUtils;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.Options;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.deploying.pack.IPackModule.Scope;
 
@@ -81,7 +79,7 @@ public class AppnodeRuntimesPacker implements IAppnodeRuntimesPacker {
 		} finally {
 			if (packTmpDir != null && packTmpDir.exists()) {
 				logger.debug("Removing pack temporary directory...");
-				IoUtils.deleteFileRecursively(packTmpDir);
+				NodeUtils.deleteFileRecursively(packTmpDir);
 			}
 		}
 	}
@@ -143,7 +141,7 @@ public class AppnodeRuntimesPacker implements IAppnodeRuntimesPacker {
 		}
 		
 		try {
-			ZipUtils.zip(packTmpDir, runtimeZip);
+			NodeUtils.zip(packTmpDir, runtimeZip);
 		} catch (TargetExistsException e) {
 			// ??? is it impossible?
 			throw new RuntimeException("Runtime zip has alread existed.", e);
@@ -235,8 +233,8 @@ public class AppnodeRuntimesPacker implements IAppnodeRuntimesPacker {
 			sScope = properties.getProperty(CONFIGURATION_KEY_SCOPE);
 			
 			Scope scope = getScope(sScope);
-			String[] dependedModules = getDependedModules(StringUtils.stringToArray((String)properties.getProperty(CONFIGURATION_KEY_DEPENDED)));
-			CopyLibraryOperation[] copyLibraries = getCopyLibraryOperations(scope, StringUtils.stringToArray(properties.getProperty(CONFIGURATION_KEY_LIBRARIES)));
+			String[] dependedModules = getDependedModules(NodeUtils.stringToArray((String)properties.getProperty(CONFIGURATION_KEY_DEPENDED)));
+			CopyLibraryOperation[] copyLibraries = getCopyLibraryOperations(scope, NodeUtils.stringToArray(properties.getProperty(CONFIGURATION_KEY_LIBRARIES)));
 			IPackConfigurator configurator = getConfigurator(properties.getProperty(CONFIGURATION_KEY_CONFIGURATOR));
 			
 			packModules.put(sectionName, new PackModule(sectionName, scope, dependedModules, copyLibraries, configurator));

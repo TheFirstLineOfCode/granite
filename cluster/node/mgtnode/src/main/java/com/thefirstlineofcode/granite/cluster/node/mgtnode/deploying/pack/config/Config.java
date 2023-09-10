@@ -18,7 +18,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.IoUtils;
+import com.thefirstlineofcode.granite.cluster.node.commons.utils.NodeUtils;
 import com.thefirstlineofcode.granite.cluster.node.commons.utils.SectionalProperties;
 
 public class Config implements IConfig {
@@ -154,7 +154,7 @@ public class Config implements IConfig {
 	
 	private void saveContentToFile() {
 		try {
-			IoUtils.writeToFile(content, configPath);
+			NodeUtils.writeToFile(content, configPath);
 		} catch (IOException e) {
 			throw new RuntimeException(String.format("Can't write config to %s.",
 					configPath), e);
@@ -183,7 +183,7 @@ public class Config implements IConfig {
 		} catch (IOException e) {
 			throw new RuntimeException("Failed to write config to file.", e);
 		} finally {
-			IoUtils.close(writer);
+			NodeUtils.close(writer);
 		}
 	}
 

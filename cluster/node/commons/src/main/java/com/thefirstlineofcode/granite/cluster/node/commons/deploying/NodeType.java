@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.StringUtils;
+import com.thefirstlineofcode.granite.cluster.node.commons.utils.NodeUtils;
 
 public class NodeType {
 	private String[] abilities;
@@ -66,7 +66,7 @@ public class NodeType {
 	}
 
 	private String getProtocolsString() {
-		String[] sortedProtocols = StringUtils.sort(getProtocols());
+		String[] sortedProtocols = NodeUtils.sort(getProtocols());
 		StringBuilder sb = new StringBuilder();
 		sb.append("protocols[");
 		for (String protocol : sortedProtocols) {
@@ -96,7 +96,7 @@ public class NodeType {
 		
 		Set<Object> keySet = configuration.keySet();
 		String[] keys = keySet.toArray(new String[keySet.size()]);
-		keys = StringUtils.sort(keys);
+		keys = NodeUtils.sort(keys);
 		
 		StringBuilder sb = new StringBuilder();
 		for (String key : keys) {
@@ -114,7 +114,7 @@ public class NodeType {
 	}
 
 	private String getAbilitiesString() {
-		String[] sortedAbilities = StringUtils.sort(getAbilities());
+		String[] sortedAbilities = NodeUtils.sort(getAbilities());
 		StringBuilder sb = new StringBuilder();
 		sb.append("abilities[");
 		for (String ability : sortedAbilities) {

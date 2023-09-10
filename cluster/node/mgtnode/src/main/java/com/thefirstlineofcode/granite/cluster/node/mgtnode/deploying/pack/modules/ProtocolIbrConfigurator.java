@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlan;
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.NodeType;
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.StringUtils;
+import com.thefirstlineofcode.granite.cluster.node.commons.utils.NodeUtils;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.deploying.pack.IPackConfigurator;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.deploying.pack.IPackContext;
 import com.thefirstlineofcode.granite.cluster.node.mgtnode.deploying.pack.config.ConfigFiles;
@@ -45,7 +45,7 @@ public class ProtocolIbrConfigurator extends AbilityStreamConfigurator implement
 		}
 		
 		if (properties.getProperty("sasl.supported.mechanisms") != null) {
-			saslSupportedMechanisms = StringUtils.stringToArray(properties.getProperty("sasl.supported.mechanisms"));
+			saslSupportedMechanisms = NodeUtils.stringToArray(properties.getProperty("sasl.supported.mechanisms"));
 			
 			for (String mechanism : saslSupportedMechanisms) {
 				if (!"DIGEST-MD5".equals(mechanism) &&
@@ -59,7 +59,7 @@ public class ProtocolIbrConfigurator extends AbilityStreamConfigurator implement
 			config.addOrUpdateProperty("stream.service$socket.message.receiver$ibr.client.message.processor$tls.required", Boolean.toString(tlsRequired));
 		
 		if (saslSupportedMechanisms != null)
-			config.addOrUpdateProperty("stream.service$socket.message.receiver$ibr.client.message.processor$sasl.supported.mechanisms", StringUtils.arrayToString(saslSupportedMechanisms));
+			config.addOrUpdateProperty("stream.service$socket.message.receiver$ibr.client.message.processor$sasl.supported.mechanisms", NodeUtils.arrayToString(saslSupportedMechanisms));
 	}
 	
 	private void configureIbrSupportedStreamServiceComponents(IConfig config) {

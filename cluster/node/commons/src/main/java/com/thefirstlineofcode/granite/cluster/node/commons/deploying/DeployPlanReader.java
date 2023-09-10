@@ -7,12 +7,11 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
-
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.SectionalProperties;
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.StringUtils;
-
 import java.util.Properties;
 import java.util.StringTokenizer;
+
+import com.thefirstlineofcode.granite.cluster.node.commons.utils.NodeUtils;
+import com.thefirstlineofcode.granite.cluster.node.commons.utils.SectionalProperties;
 
 public class DeployPlanReader implements IDeployPlanReader {
 	private static final String SECTION_NAME_GLOBAL = "global";
@@ -231,9 +230,9 @@ public class DeployPlanReader implements IDeployPlanReader {
 		for (Entry<Object, Object> entry : properties.entrySet()) {
 			String key = (String)entry.getKey();
 			if (PROPERTY_NAME_ABILITIES.equals(key)) {
-				nodeType.setAbilities(StringUtils.stringToArray((String)entry.getValue()));
+				nodeType.setAbilities(NodeUtils.stringToArray((String)entry.getValue()));
 			} else if (PROPERTY_NAME_PROTOCOLS.equals(key)) {
-				nodeType.setProtocols(StringUtils.stringToArray((String)entry.getValue()));
+				nodeType.setProtocols(NodeUtils.stringToArray((String)entry.getValue()));
 			} else {
 				throw new DeployPlanException(String.format("Invalid property in 'node' section. Property name: %s.", key));
 			}
@@ -321,9 +320,9 @@ public class DeployPlanReader implements IDeployPlanReader {
 			if (PROPERTY_NAME_DOMAIN_NAME.equals(key)) {
 				cluster.setDomainName(value);
 			} else if (PROPERTY_NAME_DOMAIN_ALIAS_NAMES.equals(key)) {
-				cluster.setDomainAliasNames(StringUtils.stringToArray(value));
+				cluster.setDomainAliasNames(NodeUtils.stringToArray(value));
 			} else if (PROPERTY_NAME_NODE_TYPES.equals(key)) {
-				cluster.setNodeTypes(StringUtils.stringToArray(value));
+				cluster.setNodeTypes(NodeUtils.stringToArray(value));
 			} else {
 				throw new DeployPlanException(String.format("Invalid property in 'cluster' section. Property name: %s.", key));
 			}

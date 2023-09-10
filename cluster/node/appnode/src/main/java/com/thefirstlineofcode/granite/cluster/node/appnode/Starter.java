@@ -29,15 +29,15 @@ import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlan;
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlanException;
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlanReader;
 import com.thefirstlineofcode.granite.cluster.node.commons.deploying.NodeType;
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.IoUtils;
-import com.thefirstlineofcode.granite.cluster.node.commons.utils.ZipUtils;
+import com.thefirstlineofcode.granite.cluster.node.commons.utils.NodeUtils;
 
 public class Starter {
+	private static final Logger logger = LoggerFactory.getLogger(Starter.class);
+	
 	private static final String NAME_PREFIX_GRANITE_SERVER = "granite-server";
 	private static final String NAME_POSTFIX_JAR = ".jar";
 	private static final String FILE_NAME_DEPLOY_PLAN = "deploy-plan.ini";
 	private static final String FILE_NAME_DEPLOY_PLAN_CHECKSUM = "deploy-plan-checksum.txt";
-	private static final Logger logger = LoggerFactory.getLogger(Starter.class);
 	
 	public void start(Options options) {
 		MgtnodeIpAndDeployPlanChecksum mgtnodeIpAndDeployPlanChecksum = null;
@@ -179,12 +179,13 @@ public class Starter {
 	}
 	
 	private void startRuntime(Options options, String nodeType, String mgtnodeIp, String runtimeName) {
+		String javaVersion = System.getProperty("java.version");
+		if (!javaVersion.startsWith("11.") && !javaVersion.startsWith("17.")) {
+			throw new RuntimeException(String.format("Only Java11 && Java17 supported. But your Java version is %s", javaVersion));
+		}
+		
 		List<String> cmdList = new ArrayList<>();
 		cmdList.add("java");
-		if (options.isRtDebug()) {
-			cmdList.add("-Xdebug");
-			cmdList.add(String.format("-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=%s", options.getRtDebugPort()));
-		}
 		
 		if (options.getRtJvmOptions() != null) {
 			StringTokenizer st = new StringTokenizer(options.getRtJvmOptions(), " ");
@@ -193,6 +194,8 @@ public class Starter {
 				cmdList.add(st.nextToken());
 			}
 		}
+		
+		NodeUtils.addVmParametersForIgnite(cmdList);
 		
 		cmdList.add("-Dgranite.deploy.plan.file=" + new File(options.getConfigurationDir(), FILE_NAME_DEPLOY_PLAN).getPath());
 		cmdList.add("-Dgranite.node.type=" + nodeType);
@@ -207,6 +210,10 @@ public class Starter {
 		
 		if (options.isRtLogEnableThirdparties()) {
 			cmdList.add("-Dgranite.log.enable.thirdparties=true");
+		}
+		
+		if (options.isRtDebug()) {
+			cmdList.add(String.format("-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:%d", options.getRtDebugPort()));
 		}
 		
 		cmdList.add("-jar");
@@ -258,13 +265,13 @@ public class Starter {
 	
 	private void unzipLocalRuntime(String runtimesDir, String runtimeName) {
 		File localRuntimeDir = new File(runtimesDir, runtimeName);
-		if (localRuntimeDir.exists() && !IoUtils.deleteFileRecursively(localRuntimeDir)) {
+		if (localRuntimeDir.exists() && !NodeUtils.deleteFileRecursively(localRuntimeDir)) {
 			throw new RuntimeException(String.format("Can't delete local runtime directory %s.",
 					localRuntimeDir.getPath()));
 		}
 		
 		try {
-			ZipUtils.unzip(new File(runtimesDir, runtimeName + ".zip"), new File(runtimesDir));
+			NodeUtils.unzip(new File(runtimesDir, runtimeName + ".zip"), new File(runtimesDir));
 		} catch (IOException e) {
 			throw new RuntimeException("Can't unzip runtime.", e);
 		}
@@ -349,8 +356,8 @@ public class Starter {
 			}
 			throw new RuntimeException("Can't download runtime zip.", e);
 		} finally {
-			IoUtils.close(in);
-			IoUtils.close(out);
+			NodeUtils.close(in);
+			NodeUtils.close(out);
 		}
 	}
 
@@ -399,7 +406,7 @@ public class Starter {
 
 	private void saveDeployPlanChecksum(String deployPlanChecksum, String configDir) {
 		try {
-			IoUtils.writeToFile(deployPlanChecksum, Paths.get(configDir, FILE_NAME_DEPLOY_PLAN_CHECKSUM));
+			NodeUtils.writeToFile(deployPlanChecksum, Paths.get(configDir, FILE_NAME_DEPLOY_PLAN_CHECKSUM));
 		} catch (IOException e) {
 			throw new RuntimeException("Can't save deploy plan checksum.", e);
 		}
@@ -421,9 +428,9 @@ public class Starter {
 		try {
 			URL url = new URL("HTTP", address, port, "/deploy/" + FILE_NAME_DEPLOY_PLAN);
 			in = url.openStream();
-			IoUtils.writeToFile(in, deployPlanFilePath);
+			NodeUtils.writeToFile(in, deployPlanFilePath);
 		} finally {
-			IoUtils.close(in);
+			NodeUtils.close(in);
 		}
 	}
 
@@ -431,7 +438,7 @@ public class Starter {
 		Path localDeployPlanChecksumFilePath = Paths.get(configurationDir, FILE_NAME_DEPLOY_PLAN_CHECKSUM);
 		if (Files.exists(localDeployPlanChecksumFilePath)) {
 			try {
-				return IoUtils.readFile(localDeployPlanChecksumFilePath);
+				return NodeUtils.readFile(localDeployPlanChecksumFilePath);
 			} catch (IOException e) {
 				throw new RuntimeException("Can't read local deploy plan checksum file.", e);
 			}
@@ -459,7 +466,7 @@ public class Starter {
 		} catch (Exception e) {
 			logger.debug("Invalid mgtnode address: {}.", address);
 		} finally {
-			IoUtils.close(in);
+			NodeUtils.close(in);
 		}
 		
 		return null;

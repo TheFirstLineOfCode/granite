@@ -40,6 +40,8 @@ public class Starter {
 	private static final String FILE_NAME_DEPLOY_PLAN_CHECKSUM = "deploy-plan-checksum.txt";
 	
 	public void start(Options options) {
+		preconfigureIgnite(options);
+		
 		MgtnodeIpAndDeployPlanChecksum mgtnodeIpAndDeployPlanChecksum = null;
 		if (!options.isNoDeploy()) {
 			mgtnodeIpAndDeployPlanChecksum = getMgtnodeIpAndDeployChecksum(options);
@@ -83,6 +85,12 @@ public class Starter {
 		}
 		
 		startRuntime(options, nodeType, mgtnodeIpAndDeployPlanChecksum == null ? null : mgtnodeIpAndDeployPlanChecksum.mgtnodeIp, runtimeName);
+	}
+
+	private void preconfigureIgnite(Options options) {
+		System.setProperty("IGNITE_REST_START_ON_CLIENT", "true");
+		System.setProperty("java.net.preferIPv4Stack", "true");
+		configureIgniteLogger(options);
 	}
 	
 	private void removeLocalDeployPlanCheckSum(String configurationDir) {
@@ -475,17 +483,12 @@ public class Starter {
 	private void joinCluster(Options options) {
 		logger.info("Application node is trying to join the cluster...");
 		
-		configureIgniteLogger(options);
-		
-		System.setProperty("java.net.preferIPv4Stack", "true");
-		
 		try {
 			IgniteConfiguration configuration = new IgniteConfiguration();
 			configuration.setUserAttributes(Collections.singletonMap("ROLE", "appnode"));
 			
 			configuration.setClientMode(true);
 			TcpDiscoverySpi discoverySpi = new TcpDiscoverySpi();
-			discoverySpi.setForceServerMode(true);
 			configuration.setDiscoverySpi(discoverySpi);
 			
 			Ignition.start(configuration);
@@ -520,6 +523,7 @@ public class Starter {
 	}
 	
 	private void configureIgniteLogger(Options options) {
-		System.setProperty("java.util.logging.config.file", options.getConfigurationDir() + "/java_util_logging.ini");
+		Path logConfigPath = Paths.get(options.getConfigurationDir(), "java_util_logging.ini");
+		System.setProperty("java.util.logging.config.file", logConfigPath.toAbsolutePath().toString());
 	}
 }

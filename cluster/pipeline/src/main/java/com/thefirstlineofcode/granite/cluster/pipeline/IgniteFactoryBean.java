@@ -17,11 +17,12 @@ import javax.cache.expiry.TouchedExpiryPolicy;
 import org.apache.ignite.Ignite;
 import org.apache.ignite.Ignition;
 import org.apache.ignite.cache.CacheAtomicityMode;
+import org.apache.ignite.cluster.ClusterState;
 import org.apache.ignite.configuration.CacheConfiguration;
 import org.apache.ignite.configuration.DataRegionConfiguration;
 import org.apache.ignite.configuration.DataStorageConfiguration;
 import org.apache.ignite.configuration.IgniteConfiguration;
-import org.apache.ignite.internal.processors.cache.persistence.filename.PdsConsistentIdProcessor;
+import org.apache.ignite.internal.processors.cache.persistence.filename.PdsFolderResolver;
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi;
 import org.apache.ignite.spi.discovery.tcp.ipfinder.multicast.TcpDiscoveryMulticastIpFinder;
 import org.pf4j.PluginWrapper;
@@ -75,7 +76,7 @@ public class IgniteFactoryBean implements FactoryBean<Ignite>, IServerConfigurat
 		Ignite ignite = Ignition.start(igniteConfiguration);
 		
 		if (isSessionPersistenceEnabled()) {
-			ignite.active(true);
+			ignite.cluster().state(ClusterState.ACTIVE);
 		}
 		
 		return ignite;
@@ -144,7 +145,7 @@ public class IgniteFactoryBean implements FactoryBean<Ignite>, IServerConfigurat
 			
 			String storagePath = dataStorageConfiguration.getStoragePath();
 			if (storagePath == null)
-				storagePath = PdsConsistentIdProcessor.DB_DEFAULT_FOLDER;
+				storagePath = PdsFolderResolver.DB_DEFAULT_FOLDER;
 			
 			if (storagePath.startsWith("/")) {
 				IoUtils.deleteFileRecursively(new File(storagePath));

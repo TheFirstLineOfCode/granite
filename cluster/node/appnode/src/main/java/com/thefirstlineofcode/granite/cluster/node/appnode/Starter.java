@@ -7,6 +7,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ProcessBuilder.Redirect;
+import java.net.Inet4Address;
+import java.net.InetSocketAddress;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,6 +23,7 @@ import org.apache.ignite.Ignition;
 import org.apache.ignite.cluster.ClusterGroup;
 import org.apache.ignite.cluster.ClusterNode;
 import org.apache.ignite.configuration.IgniteConfiguration;
+import org.apache.ignite.lang.IgnitePredicate;
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,8 +91,7 @@ public class Starter {
 	}
 
 	private void preconfigureIgnite(Options options) {
-		System.setProperty("IGNITE_REST_START_ON_CLIENT", "true");
-		System.setProperty("java.net.preferIPv4Stack", "true");
+		System.setProperty("java.net.preferIPv4Stack", "true");		
 		configureIgniteLogger(options);
 	}
 	
@@ -194,6 +196,9 @@ public class Starter {
 		
 		List<String> cmdList = new ArrayList<>();
 		cmdList.add("java");
+		
+		cmdList.add("-Xms512m");
+		cmdList.add("-Xmx512m");
 		
 		if (options.getRtJvmOptions() != null) {
 			StringTokenizer st = new StringTokenizer(options.getRtJvmOptions(), " ");
@@ -479,7 +484,7 @@ public class Starter {
 		
 		return null;
 	}
-
+	
 	private void joinCluster(Options options) {
 		logger.info("Application node is trying to join the cluster...");
 		
@@ -489,6 +494,14 @@ public class Starter {
 			
 			configuration.setClientMode(true);
 			TcpDiscoverySpi discoverySpi = new TcpDiscoverySpi();
+			discoverySpi.setAddressFilter(new IgnitePredicate<InetSocketAddress>() {
+				private static final long serialVersionUID = 854489733198861318L;
+
+				@Override
+				public boolean apply(InetSocketAddress address) {
+					return address.getAddress() instanceof Inet4Address;
+				}
+			});
 			configuration.setDiscoverySpi(discoverySpi);
 			
 			Ignition.start(configuration);

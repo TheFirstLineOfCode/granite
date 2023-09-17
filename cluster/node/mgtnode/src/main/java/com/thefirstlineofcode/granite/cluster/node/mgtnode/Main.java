@@ -36,7 +36,7 @@ public class Main {
 		}
 		
 		// Set log directory for logback(see logback.xml)
-		System.setProperty("mgtnode.logs.dir", options.getHomeDir() + "/logs");
+		System.setProperty("mgtnode.logs.dir", options.getConfigurationDir() + "/logs");
 		
 		if (options.isLanucherRunMode()) {
 			lanuch(args, options);
@@ -46,7 +46,7 @@ public class Main {
 			throw new RuntimeException(String.format("Unknown run mode: %s.", options.getRunMode()));
 		}
 	}
-
+	
 	private static void lanuch(String[] args, Options options) {
 		String javaVersion = System.getProperty("java.version");
 		if (!javaVersion.startsWith("11.") && !javaVersion.startsWith("17.")) {

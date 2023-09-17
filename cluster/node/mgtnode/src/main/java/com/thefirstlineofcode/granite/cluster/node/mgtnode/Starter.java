@@ -36,7 +36,7 @@ public class Starter {
 	private static final String FILE_NAME_DEPLOY_PLAN = "deploy-plan.ini";
 
 	// Jetty HTTP Server
-	private Server server;
+	private Server httpServer;
 	private ConsoleThread consoleThread;
 	
 	public boolean start(Options options) throws Exception {
@@ -53,7 +53,7 @@ public class Starter {
 			wait();
 		}
 		
-		if (server.isStarted()) {
+		if (httpServer.isStarted()) {
 			logger.info("HTTP Server has started.");
 		} else {
 			logger.error("Can't start HTTP Server.");
@@ -285,14 +285,14 @@ public class Starter {
 	}
 
 	private void exitSystem() {
-		if (server != null) {
+		if (httpServer != null) {
 			try {
-				server.stop();
+				httpServer.stop();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
-			server.destroy();
+			httpServer.destroy();
 		}
 		
 		if (consoleThread != null) {
@@ -309,11 +309,11 @@ public class Starter {
 		System.out.print("$");
 	}
 
+	@SuppressWarnings("deprecation")
 	private boolean joinCluster(Options options) {
 		logger.info("Management node is trying to join the cluster...");
 		
-		configureJavaUtilLogging(options);
-		
+		configureIgniteLogger(options);
 		System.setProperty("java.net.preferIPv4Stack", "true");
 		
 		try {
@@ -338,10 +338,11 @@ public class Starter {
 		}
 		
 	}
-
-	private void configureJavaUtilLogging(Options options) {
+	
+	private static void configureIgniteLogger(Options options) {
 		System.setProperty("java.util.logging.config.file", options.getConfigurationDir() + "/java_util_logging.ini");
 	}
+
 
 	private void startJettyServer(Options options) throws Exception {
 		Thread httpServerThread = new Thread(new HttpServerThread(options), "Management Node HTTP Server Thread");
@@ -358,23 +359,23 @@ public class Starter {
 		@Override
 		public void run() {
 			try {
-				server = new Server(options.getHttpPort());
+				httpServer = new Server(options.getHttpPort());
 				
 				HandlerList contextHandlers = new HandlerList();
 				contextHandlers.setHandlers(new Handler[] {createDeployContextHandler(), createRuntimesContextHandler()});
 				
-				server.setHandler(contextHandlers);
+				httpServer.setHandler(contextHandlers);
 				logger.info("Starting HTTP Server...");
-				server.start();
-				server.dumpStdErr();
+				httpServer.start();
+				httpServer.dumpStdErr();
 				logger.info("HTTP Server has started on port {}.", options.getHttpPort());
 			} catch (Exception e) {
 				try {
-					server.stop();
+					httpServer.stop();
 				} catch (Exception e1) {
 					logger.error("Can't stop http server.", e);
 				}
-				server.destroy();
+				httpServer.destroy();
 				logger.error("Some exceptions occurred in http server thread. System will exit.", e);
 			} finally {
 				synchronized (Starter.this) {

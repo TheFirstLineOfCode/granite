@@ -1,6 +1,7 @@
 package com.thefirstlineofcode.granite.cluster.pipeline;
 
 import org.apache.ignite.Ignite;
+import org.apache.ignite.configuration.AtomicConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,9 @@ public class LocalNodeIdProvider implements ILocalNodeIdProvider {
 			if (localNodeId != null)
 				return localNodeId;
 			
-			localNodeId = Long.toString(ignite.atomicSequence("node-sequence", 0, true).getAndAdd(1));
+			AtomicConfiguration configuration = new AtomicConfiguration();
+			configuration.setBackups(0);
+			localNodeId = Long.toString(ignite.atomicSequence("node-sequence", configuration, 0, true).getAndAdd(1));
 			logger.info("Cluster node '{}' is assigned to a local node ID: {}.", ignite.cluster().localNode().id().toString(), localNodeId);
 		}
 		

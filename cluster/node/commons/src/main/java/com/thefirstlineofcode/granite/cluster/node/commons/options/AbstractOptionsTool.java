@@ -87,7 +87,6 @@ public abstract class AbstractOptionsTool<T extends OptionsBase> {
 		}
 		
 		T options = readAndMergeConfigFile(commandLineOptions, new File(configurationDir, configFileName));
-		
 		options.setHomeDir(homeDirPath);
 		
 		return options;
@@ -112,29 +111,28 @@ public abstract class AbstractOptionsTool<T extends OptionsBase> {
 	}
 
 	private T readAndMergeConfigFile(Map<String, String> commandLineOptions, File configFile) {
-		if (!configFile.exists() || !configFile.isFile()) {
-			throw new IllegalArgumentException(String.format("Configuration file '%s' doesn't exist or it isn't a file.", configFile.getPath()));
-		}
-		
-		Properties config = new Properties();
-		try {
-			config.load(configFile.toURI().toURL().openStream());
-		} catch (Exception e) {
-			throw new IllegalArgumentException("Can't read configuration file.");
-		}
-		
 		T options = createOptions();
-		for (Map.Entry<Object, Object> entry : config.entrySet()) {
-			String name = (String)entry.getKey();
-			String value = (String)entry.getValue();
-			
-			OptionRule rule = optionRules.get(name);
-			if (rule == null || rule.getRange() == OptionRule.Range.COMMAND_LINE) {
-				throw new IllegalArgumentException(String.format("Illegal configuration item '%s' from configuration file %s.",
-						name, configFile));
+		
+		if (configFile.exists() && configFile.isFile()) {
+			Properties config = new Properties();
+			try {
+				config.load(configFile.toURI().toURL().openStream());
+			} catch (Exception e) {
+				throw new IllegalArgumentException("Can't read configuration file.");
 			}
 			
-			rule.getOptionSetter().setOption(options, name, replaceReferences(value));
+			for (Map.Entry<Object, Object> entry : config.entrySet()) {
+				String name = (String)entry.getKey();
+				String value = (String)entry.getValue();
+				
+				OptionRule rule = optionRules.get(name);
+				if (rule == null || rule.getRange() == OptionRule.Range.COMMAND_LINE) {
+					throw new IllegalArgumentException(String.format("Illegal configuration item '%s' from configuration file %s.",
+							name, configFile));
+				}
+				
+				rule.getOptionSetter().setOption(options, name, replaceReferences(value));
+			}
 		}
 		
 		List<String> usedOptions = new ArrayList<>();
@@ -157,7 +155,7 @@ public abstract class AbstractOptionsTool<T extends OptionsBase> {
 		
 		return options;
 	}
-
+	
 	private String replaceReferences(String value) {
 		// TODO replace references of value
 		return value;

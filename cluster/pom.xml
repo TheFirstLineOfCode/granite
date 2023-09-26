@@ -16,7 +16,7 @@
 	<name>XMPP server deploy cluster plugins and tools</name>
 
 	<modules>
-		<module>node</module>
+		<module>nodes</module>
 		<module>pipeline</module>
 		<module>session</module>
 		<module>dba</module>

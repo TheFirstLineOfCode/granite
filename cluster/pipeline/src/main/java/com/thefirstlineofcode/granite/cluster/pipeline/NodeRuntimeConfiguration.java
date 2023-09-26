@@ -1,6 +1,6 @@
 package com.thefirstlineofcode.granite.cluster.pipeline;
 
-import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlan;
+import com.thefirstlineofcode.granite.cluster.nodes.commons.deploying.DeployPlan;
 
 public class NodeRuntimeConfiguration {
 	private String nodeType;

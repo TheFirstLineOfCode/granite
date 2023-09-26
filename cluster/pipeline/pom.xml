@@ -26,8 +26,8 @@
 			<artifactId>granite-framework-adf-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.thefirstlineofcode.granite.cluster.node</groupId>
-			<artifactId>granite-cluster-node-commons</artifactId>
+			<groupId>com.thefirstlineofcode.granite.cluster.nodes</groupId>
+			<artifactId>granite-cluster-nodes-commons</artifactId>
 		</dependency>
 	</dependencies>
 

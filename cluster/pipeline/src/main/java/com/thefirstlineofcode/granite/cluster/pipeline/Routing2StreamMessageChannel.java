@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import com.thefirstlineofcode.basalt.xmpp.core.JabberId;
 import com.thefirstlineofcode.basalt.xmpp.core.stanza.Stanza;
-import com.thefirstlineofcode.granite.cluster.node.commons.deploying.NodeType;
+import com.thefirstlineofcode.granite.cluster.nodes.commons.deploying.NodeType;
 import com.thefirstlineofcode.granite.framework.core.annotations.Component;
 import com.thefirstlineofcode.granite.framework.core.annotations.Dependency;
 import com.thefirstlineofcode.granite.framework.core.pipeline.IMessage;

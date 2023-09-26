@@ -22,12 +22,12 @@
 			<artifactId>granite-pack-cluster-mgtnode</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.thefirstlineofcode.granite.cluster.node</groupId>
-			<artifactId>granite-cluster-node-mgtnode</artifactId>
+			<groupId>com.thefirstlineofcode.granite.cluster.nodes</groupId>
+			<artifactId>granite-cluster-nodes-mgtnode</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.thefirstlineofcode.granite.cluster.node</groupId>
-			<artifactId>granite-cluster-node-appnode</artifactId>
+			<groupId>com.thefirstlineofcode.granite.cluster.nodes</groupId>
+			<artifactId>granite-cluster-nodes-appnode</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.thefirstlineofcode.granite</groupId>

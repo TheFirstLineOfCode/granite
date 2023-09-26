@@ -7,9 +7,9 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlan;
-import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlanException;
-import com.thefirstlineofcode.granite.cluster.node.commons.deploying.DeployPlanReader;
+import com.thefirstlineofcode.granite.cluster.nodes.commons.deploying.DeployPlan;
+import com.thefirstlineofcode.granite.cluster.nodes.commons.deploying.DeployPlanException;
+import com.thefirstlineofcode.granite.cluster.nodes.commons.deploying.DeployPlanReader;
 import com.thefirstlineofcode.granite.framework.core.repository.CreationException;
 import com.thefirstlineofcode.granite.framework.core.repository.GenericComponentInfo;
 import com.thefirstlineofcode.granite.framework.core.repository.IRepository;

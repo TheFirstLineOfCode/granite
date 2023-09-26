@@ -594,18 +594,18 @@
 			</dependency>		
 			<!-- Granite deploy cluster node libraries -->
 			<dependency>
-				<groupId>com.thefirstlineofcode.granite.cluster.node</groupId>
-				<artifactId>granite-cluster-node-commons</artifactId>
+				<groupId>com.thefirstlineofcode.granite.cluster.nodes</groupId>
+				<artifactId>granite-cluster-nodes-commons</artifactId>
 				<version>${granite.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.thefirstlineofcode.granite.cluster.node</groupId>
-				<artifactId>granite-cluster-node-appnode</artifactId>
+				<groupId>com.thefirstlineofcode.granite.cluster.nodes</groupId>
+				<artifactId>granite-cluster-nodes-appnode</artifactId>
 				<version>${granite.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.thefirstlineofcode.granite.cluster.node</groupId>
-				<artifactId>granite-cluster-node-mgtnode</artifactId>
+				<groupId>com.thefirstlineofcode.granite.cluster.nodes</groupId>
+				<artifactId>granite-cluster-nodes-mgtnode</artifactId>
 				<version>${granite.version}</version>
 			</dependency>
 			<!-- Granite pack projects -->

@@ -1,6 +1,6 @@
 package com.thefirstlineofcode.granite.cluster.pipeline;
 
-import com.thefirstlineofcode.granite.cluster.node.commons.deploying.NodeType;
+import com.thefirstlineofcode.granite.cluster.nodes.commons.deploying.NodeType;
 import com.thefirstlineofcode.granite.framework.core.annotations.Component;
 import com.thefirstlineofcode.granite.framework.core.annotations.Dependency;
 import com.thefirstlineofcode.granite.framework.core.pipeline.IMessage;

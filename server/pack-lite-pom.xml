@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>com.thefirstlineofcode.granite</groupId>
 		<artifactId>com.thefirstlineofcode.granite</artifactId>
-		<version>1.0.4-RELEASE</version>
+		<version>1.0.5-RELEASE</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>	
 	
 	<groupId>com.thefirstlineofcode.granite</groupId>
-	<artifactId>granite-server</artifactId>
-	<name>Granite Server Pack Lite Project</name>
+	<artifactId>granite-server-lite</artifactId>
+	<name>Granite Server Lite</name>
 	
 	<properties>
 		<main.class>com.thefirstlineofcode.granite.server.Main</main.class>

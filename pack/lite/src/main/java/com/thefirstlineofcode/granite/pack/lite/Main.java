@@ -6,7 +6,7 @@ import com.thefirstlineofcode.granite.pack.lite.Options.Protocol;
 import com.thefirstlineofcode.granite.pack.lite.Options.WebcamMode;
 
 public class Main {
-	private static final String DEFAULT_VERSION = "1.0.4-RELEASE";
+	private static final String DEFAULT_VERSION = "1.0.5-RELEASE";
 	private static final String NAME_PREFIX_APP = "granite-lite";
 	private static final String DEFAULT_SAND_PROJECT_NAME = "sand";
 	
@@ -190,7 +190,6 @@ public class Main {
 		System.out.println("-cleanUpdate                           Clean and update specified modules.");
 		System.out.println("-cleanCache                            Clean the packing cache.");
 		System.out.println("-offline                               Run in offline mode.");
-		// System.out.println("-version <VERSION>                     Specify the version. Default is 1.0.4-RELEASE.");
 		System.out.println("-protocol <PROTOCOL>                   Specify the protocol. Optional protocols are 'mini', 'standard' or 'iot'. Default is 'standard'.");
 		System.out.println("-webcamMode <WEBCAM-MODE>              Specify that which webcam plugin needs to be deployed. Optional plugins are 'none', 'p2p', 'kurento'. Default is 'none'.");
 		System.out.println("-sandProjectName <SAND-PROJECT-NAME>   Specify the sand project name. Default is 'com.thefirstlineofcode.sand'.");

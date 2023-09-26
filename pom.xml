@@ -7,14 +7,14 @@
 	<groupId>com.thefirstlineofcode.granite</groupId>
 	<artifactId>com.thefirstlineofcode.granite</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.4-RELEASE</version>
+	<version>1.0.5-RELEASE</version>
 	<name>Granite XMPP Server</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<springframework.version>5.2.9.RELEASE</springframework.version>
+		<springframework.version>5.3.30</springframework.version>
 		<basalt.version>1.1.0-RELEASE</basalt.version>
-		<granite.version>1.0.4-RELEASE</granite.version>
+		<granite.version>1.0.5-RELEASE</granite.version>
 		<sand.version>1.0.0-BETA3</sand.version>
 		<gem.version>0.2.0-RELEASE</gem.version>
 		<netty.version>4.1.77.Final</netty.version>
@@ -193,6 +193,14 @@
 						<groupId>org.springframework</groupId>
 					</exclusion>
 					<exclusion>
+						<artifactId>spring-beans</artifactId>
+						<groupId>org.springframework</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>spring-expression</artifactId>
+						<groupId>org.springframework</groupId>
+					</exclusion>
+					<exclusion>
 						<artifactId>spring-core</artifactId>
 						<groupId>org.springframework</groupId>
 					</exclusion>
@@ -205,14 +213,63 @@
 						<groupId>org.springframework</groupId>
 					</exclusion>
 					<exclusion>
+						<artifactId>spring-beans</artifactId>
+						<groupId>org.springframework</groupId>
+					</exclusion>
+					<exclusion>
 						<groupId>commons-logging</groupId>
 						<artifactId>commons-logging</artifactId>
 					</exclusion>
 				</exclusions>
 			</dependency>
 			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-mongodb</artifactId>
+				<version>3.4.16</version>
+				<exclusions>
+					<exclusion>
+						<artifactId>spring-context</artifactId>
+						<groupId>org.springframework</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>spring-core</artifactId>
+						<groupId>org.springframework</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>spring-tx</artifactId>
+						<groupId>org.springframework</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>spring-jdbc</artifactId>
+						<groupId>org.springframework</groupId>
+					</exclusion>
+					<exclusion>
+						<artifactId>spring-beans</artifactId>
+						<groupId>org.springframework</groupId>
+					</exclusion>
+					<exclusion>
+						<groupId>commons-logging</groupId>
+						<artifactId>commons-logging</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context</artifactId>
+				<version>${springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${springframework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-expression</artifactId>
 				<version>${springframework.version}</version>
 			</dependency>
 			<dependency>

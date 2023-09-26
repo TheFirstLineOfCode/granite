@@ -8,7 +8,7 @@
 	<parent>
         <groupId>com.thefirstlineofcode.granite.cluster</groupId>
         <artifactId>granite-cluster-node</artifactId>
-        <version>1.0.4-RELEASE</version>
+        <version>1.0.5-RELEASE</version>
 	<relativePath>../pom.xml</relativePath>
     </parent>
 	

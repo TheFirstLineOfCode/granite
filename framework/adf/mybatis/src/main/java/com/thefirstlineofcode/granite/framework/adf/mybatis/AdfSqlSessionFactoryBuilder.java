@@ -15,7 +15,7 @@ import com.thefirstlineofcode.basalt.xmpp.datetime.DateTime;
 import com.thefirstlineofcode.granite.framework.core.adf.IApplicationComponentService;
 
 public class AdfSqlSessionFactoryBuilder extends SqlSessionFactoryBuilder {
-	private static final String PREFIX_NAME_PERSIST_OBJECT_TYPE_COC = "D_";
+	private static final String PREFIX_NAME_DATA_OBJECT_TYPE_COC = "D_";
 	
 	private IApplicationComponentService appComponentService;
 	
@@ -86,7 +86,7 @@ public class AdfSqlSessionFactoryBuilder extends SqlSessionFactoryBuilder {
 						dataObjectMap.dataType);					
 			} else {
 				String name = dataObjectMap.dataType.getSimpleName();					
-				if (name.startsWith(PREFIX_NAME_PERSIST_OBJECT_TYPE_COC)) {
+				if (name.startsWith(PREFIX_NAME_DATA_OBJECT_TYPE_COC)) {
 					name = name.substring(2, name.length());
 				}
 				

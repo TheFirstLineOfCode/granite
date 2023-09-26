@@ -10,8 +10,8 @@ import com.thefirstlineofcode.basalt.xmpp.core.stanza.Iq;
 import com.thefirstlineofcode.basalt.xmpp.core.stanza.error.BadRequest;
 import com.thefirstlineofcode.basalt.xmpp.core.stream.error.InternalServerError;
 import com.thefirstlineofcode.basalt.xmpp.im.roster.Item;
-import com.thefirstlineofcode.basalt.xmpp.im.roster.Roster;
 import com.thefirstlineofcode.basalt.xmpp.im.roster.Item.Ask;
+import com.thefirstlineofcode.basalt.xmpp.im.roster.Roster;
 import com.thefirstlineofcode.granite.framework.core.adf.data.IDataObjectFactory;
 import com.thefirstlineofcode.granite.framework.core.adf.data.IDataObjectFactoryAware;
 import com.thefirstlineofcode.granite.framework.core.annotations.AppComponent;
@@ -141,6 +141,12 @@ public class RosterOperator implements IServerConfigurationAware, IDataObjectFac
 	}
 	
 	public void rosterSet(IConnectionContext context, JabberId userJid, Roster roster) {
+		String contact = doRosterSet(userJid, roster);
+		
+		rosterPush(context, userJid.getNode(), contact);
+	}
+	
+	private String doRosterSet(JabberId userJid, Roster roster) {
 		if (roster.getItems().length != 1) {
 			throw new ProtocolException(new BadRequest("Only one item allowed in roster set."));
 		}
@@ -154,7 +160,7 @@ public class RosterOperator implements IServerConfigurationAware, IDataObjectFac
 			rosterUpdate(userJid.getNode(), contact, item.getName(), item.getGroups());
 		}
 		
-		rosterPush(context, userJid.getNode(), contact);
+		return contact;
 	}
 	
 	private void rosterAdd(String user, String contact, String nickname, List<String> groups) {

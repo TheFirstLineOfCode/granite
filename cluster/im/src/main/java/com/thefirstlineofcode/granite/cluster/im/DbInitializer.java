@@ -10,18 +10,21 @@ import com.thefirstlineofcode.granite.framework.adf.mongodb.AbstractDbInitialize
 
 public class DbInitializer extends AbstractDbInitializer {
 
+	private static final String FIELD_NAME_CONTACT = "contact";
+	private static final String FIELD_NAME_USER = "user";
+
 	@Override
 	public void initialize(MongoDatabase database) {
-		if (collectionExistsInDb(database, "subscriptions"))
+		if (collectionExistsInDb(database, D_Subscription.COLLECTION_NAME_SUBSCRIPTIONS))
 			return;
 		
-		database.createCollection("subscriptions");
-		MongoCollection<Document> subscriptions = database.getCollection("subscriptions");
-		subscriptions.createIndex(Indexes.compoundIndex(Indexes.ascending("user"), Indexes.ascending("contact")), new IndexOptions().unique(true));
+		database.createCollection(D_Subscription.COLLECTION_NAME_SUBSCRIPTIONS);
+		MongoCollection<Document> subscriptions = database.getCollection(D_Subscription.COLLECTION_NAME_SUBSCRIPTIONS);
+		subscriptions.createIndex(Indexes.compoundIndex(Indexes.ascending(FIELD_NAME_USER), Indexes.ascending(FIELD_NAME_CONTACT)), new IndexOptions().unique(true));
 		
-		database.createCollection("subscription_notifications");
-		MongoCollection<Document> subscriptionNofications = database.getCollection("subscription_notifications");
-		subscriptionNofications.createIndex(Indexes.ascending("user"));
+		database.createCollection(D_SubscriptionNotification.COLLECTION_NAME_SUBSCRIPTION_NOTIFICATIONS);
+		MongoCollection<Document> subscriptionNofications = database.getCollection(D_SubscriptionNotification.COLLECTION_NAME_SUBSCRIPTION_NOTIFICATIONS);
+		subscriptionNofications.createIndex(Indexes.ascending(FIELD_NAME_USER));
 	}
 
 }

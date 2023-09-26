@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.thefirstlineofcode.granite</groupId>
 		<artifactId>granite-xeps</artifactId>
-		<version>1.0.4-RELEASE</version>
+		<version>1.0.5-RELEASE</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 	

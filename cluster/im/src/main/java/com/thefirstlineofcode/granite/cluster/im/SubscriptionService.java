@@ -1,20 +1,19 @@
 package com.thefirstlineofcode.granite.cluster.im;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.Updates;
 import com.thefirstlineofcode.basalt.xmpp.core.JabberId;
 import com.thefirstlineofcode.basalt.xmpp.core.ProtocolException;
 import com.thefirstlineofcode.basalt.xmpp.core.stanza.error.InternalServerError;
-import com.thefirstlineofcode.granite.framework.adf.mongodb.IDocToObj;
-import com.thefirstlineofcode.granite.framework.adf.mongodb.IterableToList;
 import com.thefirstlineofcode.granite.framework.im.ISubscriptionService;
 import com.thefirstlineofcode.granite.framework.im.Subscription;
 import com.thefirstlineofcode.granite.framework.im.Subscription.State;
@@ -24,80 +23,75 @@ import com.thefirstlineofcode.granite.framework.im.SubscriptionType;
 import com.thefirstlineofcode.granite.im.SubscriptionStateChangeRules;
 
 @Component
+@Transactional
 public class SubscriptionService implements ISubscriptionService {
+	private static final String FIELD_NAME_SUBSCRIPTION_TYPE = "subscriptionType";
+	private static final String FIELD_NAME_STATE = "state";
+	private static final String FIELD_NAME_GROUPS = "groups";
+	private static final String FIELD_NAME_NAME = "name";
+	private static final String FIELD_NAME_CONTACT = "contact";
+	private static final String FIELD_NAME_USER = "user";
+	
 	@Autowired
-	private MongoDatabase database;
-
+	private MongoTemplate mongoTemplate;
+	
 	@Override
 	public List<Subscription> get(String user) {
-		return new IterableToList<Subscription>().toList(
-				getSubscriptionsCollection().find(Filters.eq("user", user)),
-				new IDocToObj<Subscription>() {
-					@Override
-					public Subscription toObj(Document doc) {
-						return docToSubscription(doc);
-					}
-				}
-		);
-	}
-
-	private D_Subscription docToSubscription(Document doc) {
-		D_Subscription subscription = new D_Subscription();
-		subscription.setId(doc.getObjectId("_id").toHexString());
-		subscription.setUser(doc.getString("user"));
-		subscription.setContact(doc.getString("contact"));
-		subscription.setState(State.valueOf(doc.getString("state")));
-		subscription.setGroups(doc.getString("groups"));
+		List<D_Subscription> subscriptions = mongoTemplate.find(
+				new Query().addCriteria(Criteria.where(FIELD_NAME_USER).is(user)),
+				D_Subscription.class);
 		
-		return subscription;
+		return new ArrayList<Subscription>(subscriptions);
 	}
 	
-	private MongoCollection<Document> getSubscriptionsCollection() {
-		return database.getCollection("subscriptions");
-	}
-
 	@Override
 	public Subscription get(String user, String contact) {
-		Document doc = getSubscriptionsCollection().find(Filters.and(Filters.eq("user", user), Filters.eq("contact", contact))).first();
-		
-		if (doc == null)
-			return null;
-		
-		return docToSubscription(doc);
+		return mongoTemplate.findOne(
+				new Query().addCriteria(Criteria.where(FIELD_NAME_USER).is(user).and(FIELD_NAME_CONTACT).is(contact)),
+				D_Subscription.class);
 	}
 
 	@Override
 	public boolean exists(String user, String contact) {
-		return getSubscriptionsCollection().countDocuments(Filters.and(Filters.eq("user", user), Filters.eq("contact", contact))) == 1;
+		return mongoTemplate.count(
+				new Query().addCriteria(Criteria.where(FIELD_NAME_USER).is(user).and(FIELD_NAME_CONTACT).is(contact)),
+				D_Subscription.class) != 0;
 	}
 	
 	@Override
 	public void add(Subscription subscription) {
-		Document doc = new Document().
-				append("user", subscription.getUser()).
-				append("contact", subscription.getContact()).
-				append("name", subscription.getName()).
-				append("groups", subscription.getGroups()).
-				append("state", subscription.getState().toString());
+		if (!(subscription instanceof D_Subscription)) {
+			throw new IllegalArgumentException(String.format("Must be type of '%s'", D_Subscription.class.getName()));
+		}
 		
-		getSubscriptionsCollection().insertOne(doc);
+		mongoTemplate.save(subscription);
 	}
 
 	@Override
 	public void updateNameAndGroups(String user, String contact, String name, String groups) {
-		getSubscriptionsCollection().updateOne(Filters.and(Filters.eq("user", user), Filters.eq("contact", contact)),
-				Updates.combine(Updates.set("name", name), Updates.set("groups", groups)));
+		Query query = new Query().addCriteria(Criteria.where(FIELD_NAME_USER).is(user).and(FIELD_NAME_CONTACT).is(contact));
+		
+		Update update = new Update();
+		update.set(FIELD_NAME_NAME, name);
+		update.set(FIELD_NAME_GROUPS, groups);
+		
+		mongoTemplate.updateFirst(query, update, D_Subscription.class);
 	}
 
 	@Override
 	public void updateState(String user, String contact, State state) {
-		getSubscriptionsCollection().updateOne(Filters.and(Filters.eq("user", user), Filters.eq("contact", contact)),
-				Updates.set("state", state.toString()));
+		Query query = new Query().addCriteria(Criteria.where(FIELD_NAME_USER).is(user).and(FIELD_NAME_CONTACT).is(contact));
+		
+		Update update = new Update();
+		update.set(FIELD_NAME_STATE, state.toString());
+		
+		mongoTemplate.updateFirst(query, update, D_Subscription.class);
 	}
 
 	@Override
 	public void remove(String user, String contact) {
-		getSubscriptionsCollection().deleteOne(Filters.and(Filters.eq("name", user), Filters.eq("contact", contact)));
+		Query query = new Query().addCriteria(Criteria.where(FIELD_NAME_USER).is(user).and(FIELD_NAME_CONTACT).is(contact));
+		mongoTemplate.remove(query, D_Subscription.class);
 	}
 
 	@Override
@@ -182,61 +176,31 @@ public class SubscriptionService implements ISubscriptionService {
 
 	@Override
 	public List<SubscriptionNotification> getNotificationsByUser(String user) {
-		return new IterableToList<SubscriptionNotification>().toList(
-				getSubscriptionNotificationsCollection().find(Filters.eq("user", user)),
-				new IDocToObj<SubscriptionNotification>() {
-					@Override
-					public SubscriptionNotification toObj(Document doc) {
-						return docToSubscriptionNotification(doc);
-					}
-				}
-		);
+		List<D_SubscriptionNotification> notifications = mongoTemplate.find(
+				new Query().addCriteria(Criteria.where(FIELD_NAME_USER).is(user)),
+				D_SubscriptionNotification.class);
+		return new ArrayList<SubscriptionNotification>(notifications);
 	}
-
-	private SubscriptionNotification docToSubscriptionNotification(Document doc) {
-		SubscriptionNotification notification = new SubscriptionNotification();
-		notification.setUser(doc.getString("user"));
-		notification.setContact(doc.getString("contact"));
-		notification.setSubscriptionType(SubscriptionType.valueOf(doc.getString("subscription_type")));
-		
-		return notification;
-	}
-
+	
 	@Override
 	public List<SubscriptionNotification> getNotificationsByUserAndContact(String user, String contact) {
-		return new IterableToList<SubscriptionNotification>().toList(
-				getSubscriptionNotificationsCollection().find(Filters.eq("user", user)),
-				new IDocToObj<SubscriptionNotification>() {
-					@Override
-					public SubscriptionNotification toObj(Document doc) {
-						return docToSubscriptionNotification(doc);
-					}
-				}
-		);
+		List<D_SubscriptionNotification> notifications = mongoTemplate.find(
+				new Query().addCriteria(Criteria.where(FIELD_NAME_USER).is(user).and(FIELD_NAME_CONTACT).is(contact)),
+				D_SubscriptionNotification.class);
+		return new ArrayList<SubscriptionNotification>(notifications);
 	}
 
 	@Override
 	public void addNotification(SubscriptionNotification notification) {
-		Document doc = new Document().
-				append("user", notification.getUser()).
-				append("contact", notification.getContact()).
-				append("subscription_type", notification.getSubscriptionType().toString());
-		getSubscriptionNotificationsCollection().insertOne(doc);
+		mongoTemplate.save(notification);
 	}
 
 	@Override
 	public void removeNotification(SubscriptionNotification notification) {
-		getSubscriptionNotificationsCollection().deleteOne(
-				Filters.and(
-						Filters.eq("user", notification.getUser()),
-						Filters.eq("contact", notification.getContact()),
-						Filters.eq("subscription_type", notification.getSubscriptionType().toString())
-				)
-		);
+		Query query = new Query().addCriteria(
+				Criteria.where(FIELD_NAME_USER).is(notification.getUser()).
+				and(FIELD_NAME_CONTACT).is(notification.getContact()).
+				and(FIELD_NAME_SUBSCRIPTION_TYPE).is(notification.getSubscriptionType()));
+		mongoTemplate.remove(query, D_SubscriptionNotification.class);
 	}
-	
-	private MongoCollection<Document> getSubscriptionNotificationsCollection() {
-		return database.getCollection("subscription_notifications");
-	}
-
 }

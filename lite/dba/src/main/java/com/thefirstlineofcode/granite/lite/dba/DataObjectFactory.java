@@ -57,7 +57,7 @@ public class DataObjectFactory implements IDataObjectFactory, IInitializable, IA
 			inited = true;
 		}
 	}
-		
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public <K, V extends K> V create(Class<K> clazz) {

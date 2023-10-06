@@ -1,4 +1,4 @@
-## Granite安装向导（此文档已经过时，敬请等待更新！）
+## Granite安装向导
 
 ### Granite简介
 Granite是一个开源XMPP服务器，具有有以下特征：

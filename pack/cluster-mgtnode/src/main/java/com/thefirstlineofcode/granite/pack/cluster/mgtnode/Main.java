@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Main {
 	private static final String DEFAULT_VERSION = "1.0.5-RELEASE";
-	private static final String NAME_PREFIX_APP = "granite-cluster-node-mgtnode-";
+	private static final String NAME_PREFIX_APP = "granite-cluster-nodes-mgtnode-";
 	
 	public static void main(String[] args) {
 		Main main = new Main();

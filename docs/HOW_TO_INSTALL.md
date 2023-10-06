@@ -31,16 +31,16 @@ Granite Cluster部署版本持久层采用MongoDB数据库，而Granite Lite部�
 Granite Lite依赖JDK 11或者JRE 11。你需要将JDK或者JRE先安装到系统中。
 
 #### 下载
-点击链接下载 [Granite Lite Standard](https://github.com/TheFirstLineOfCode/granite/releases/download/1.0.4-RELEASE/granite-lite-standard-1.0.4-RELEASE.zip)
+点击链接下载 [Granite Lite Standard](https://github.com/TheFirstLineOfCode/granite/releases/download/1.0.5-RELEASE/granite-lite-standard-1.0.5-RELEASE.zip)
 
 #### 安装
-解压granite-lite-standard-1.0.4-RELEASE.zip。
+解压granite-lite-standard-1.0.5-RELEASE.zip。
 
 #### 检查
 进入解压后的系统安装目录，运行启动命令：
 ```
-cd granite-lite-standard-1.0.4-RELEASE
-java -jar granite-server-1.0.4-RELEASE.jar -console
+cd granite-lite-standard-1.0.5-RELEASE
+java -jar granite-server-1.0.5-RELEASE.jar -console
 ```
 启动Granite Lite XMPP Server后，可以在Granite Server Console里，执行services命令，检查Services是否都正常启动了。
 ```
@@ -146,13 +146,13 @@ Granite Cluster提供了Granite Lite不具备的以下特性：
 Granite Cluster MgtNode依赖JDK 11或者JRE 11。你需要将JDK或者JRE先安装到系统中。
 
 ##### 下载Granite Cluster MgtNode
-Granite Cluster MgtNode [点击下载](http://www.firstlinecode.com/downloads/granite-cluster-mgtnode-0.2.1.RELEASE.zip)
+Granite Cluster MgtNode [点击下载](https://github.com/TheFirstLineOfCode/granite/releases/download/1.0.5-RELEASE/granite-cluster-nodes-mgtnode-1.0.5-RELEASE.zip)
 
 ##### 安装
-解压granite-cluster-mgtnode-0.2.1.RELEASE.zip。
+解压granite-cluster-nodes-mgtnode-1.0.5-RELEASE.zip。
 
 ##### 配置
-Granite Cluster MgtNode的核心配置文件是$GRANITE_CLUSTER_MGTNODE_HOME/configuration/com.firstlinecode.granite/deploy-plan.ini，用户在此文件中定义系统的部署方案。
+Granite Cluster MgtNode的核心配置文件是$GRANITE_CLUSTER_MGTNODE_HOME/configuration/deploy-plan.ini，用户在此文件中定义系统的部署方案。
 
 * ** 定义domain **
 根据XMPP规范要求，每个XMPP Server必须指定Domain。用户可以在在deploy-plan.ini的cluster章节中配置Domain：
@@ -189,18 +189,15 @@ user-name=granite
 password=mypassword
 ```
 
-
 > 关于Granite Cluster部署方案配置的更多信息，请参考[Granite用户手册](http://www.firstlinecode.com/lithosphere/granite/docs/user_guide.html)
 
 ##### 检查
-
 ```
-cd granite-cluster-mgtnode-0.2.1.RELEASE
-java -jar granite-cluster-mgtnode-0.2.1.RELEASE.jar
+cd granite-cluster-nodes-mgtnode-1.0.5-RELEASE
+java -jar granite-cluster-nodes-mgtnode-1.0.5-RELEASE.jar
 ```
 
 正常启动后，可以看到类似以下的提示，说明MgtNode已经正常启动。
-
 ```
 21:23:14.876 [main] INFO  c.c.g.cluster.node.mgtnode.Starter - Management node has joined the cluster.
 21:23:15.376 [main] INFO  c.c.g.cluster.node.mgtnode.Starter - Starting console...
@@ -211,87 +208,62 @@ $
 ```
 
 #### 安装Granite Cluster AppNode
-
 #####  前置准备
-
-** 安装JDK或JRE **
-
-Granite Cluster AppNode依赖JDK 1.7+或者JRE 1.7+。你需要将JDK或者JRE先安装到系统中。
-
-** 替换JCE策略文件 **
-
-如果使用Oracke JDK或JRE，需要下载并替换JCE Policy文件。
-
-JDK 7点击此处下载 [JCE强度无限制策略文件](http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html)
-
-JDK 8点击此处下载 [JCE强度无限制策略文件](www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html)
-
-下载后，解压zip文件，将local_policy.jar和US_export_policy.jar两个文件拷贝到$JAVA_HOME\jre\lib\security目录下并覆盖原有文件。
+**安装JDK或JRE**
+Granite Cluster MgtNode依赖JDK 11或者JRE 11。你需要将JDK或者JRE先安装到系统中。
 
 ##### 下载
-
-Granite Cluster AppNode [点击下载](http://www.firstlinecode.com/downloads/granite-cluster-appnode-0.2.1.RELEASE.zip)
+Granite Cluster AppNode [点击下载](https://github.com/TheFirstLineOfCode/granite/releases/download/1.0.5-RELEASE/granite-cluster-nodes-appnode-1.0.5-RELEASE.zip)
 
 ##### 安装
-
-解压granite-cluster-appnode-0.2.1.RELEASE.zip。
+解压granite-cluster-nodes-appnode-1.0.5-RELEASE.zip。
 
 ##### 检查
-
 ```
-cd granite-cluster-appnode-0.2.1.RELEASE
-java -jar granite-cluster-appnode-0.2.1.RELEASE.jar
+cd granite-cluster-nodes-appnode-1.0.5-RELEASE
+java -jar granite-cluster-nodes-appnode-1.0.5-RELEASE.jar
 ```
 
-AppNode会自动连接到MgtNode，下载部署方案和运行时，并且启动OSGi运行时。
+AppNode会自动连接到MgtNode，下载部署方案和运行时，并且启动运行时。
 
-启动OSGi后，可以在OSGi console里，运行granite services，检查services是否正常启动了。
-
+启动运行时后，可以在Granite Server Console里，运行services，检查services是否正常启动了。
 ```
-g! granite services
+$ services
 ```
 
 如果看到以下的内容，说明Granite XMPP Server已经正常启动了。
-
 ```
-g! granite services
+$ services
 id      State           Service ID
 0       Available       stream.service
 1       Available       processing.service
 2       Available       routing.service
 3       Available       event.service
 4       Available       parsing.service
-g!
+$
 ```
 
-可以在OSGi console中执行granite close命令，终止Granite XMPP Server运行。
-
+可以在Granite Server Console中执行exit命令，终止Granite XMPP Server运行。
 ```
-g! granite close
+$ exit
 ```
 
 #### 配置Load Balancer
-
 理论上，可以使用任何支持TCP协议的Load Balancer，我们以gobetween([http://gobetween.io](http://gobetween.io/))为例。
 
 ##### 安装
-
 下载并安装gobetween，并安装到负责Load Balancing的机器节点上。
 
 ##### 配置
-
 假设Load Balancer主机地址如下：
-
 * 192.168.1.101。
 
 我们有3个AppNode地址如下：
-
 * 192.168.1.102
 * 192.168.1.103
 * 192.168.1.104
 
 我们需要修改${GOBETWEEN_HOME}/config/gobetween.toml配置文件，配置以下的内容：
-
 [servers]
 
 [servers.granite-cluster]
@@ -308,9 +280,7 @@ static_list = [
 ]
 
 ##### 检查
-
 使用以下命令启动Load Balancer：
-
 ```
 gobetween -c ./config/gobetween.toml
 ```
@@ -318,61 +288,52 @@ gobetween -c ./config/gobetween.toml
 现在Granite Cluster已经配置完成了，由于Granite是一个XMPP标准兼容的服务器实现，可以使用标准的XMPP客户端连接到192.168.1.101:5222，并测试其功能。
 
 ### 从源码构建
-
 #### 前置准备
-
-* ** 安装JDK或JRE **
-
-Granite依赖JDK 1.7+或者JRE 1.7+。你需要将JDK或者JRE先安装到系统中。
+* ** 安装JDK或JRE **<br>
+Granite Lite依赖JDK 11或者JRE 11。你需要将JDK或者JRE先安装到系统中。
 
 * ** 安装Maven **
-
 Granite依赖Maven进行构建。你需要将Apache Maven 3.3.9+先安装到系统中。
 
 #### 构建Granite
-
 ##### 下载代码
-
 ```
-git clone https://github.com/dongger1975/com.firstlinecode.granite.git
+git clone https://github.com/TheFirstLineOfCode/granite.git
 ```
 
 ##### 构建所有插件
-
 ```
-cd com.firstlinecode.granite
+cd granite
 mvn clean install
 ```
 
 ##### 打包Granite Lite
-
 ```
-cd com.firstlinecode.granite.pack/com.firstlinecode.granite.pack.lite
+cd pack/lite
 mvn clean package
 cd target
-java -jar com.firstlinecode.granite.pack.lite-0.2.1.RELEASE.jar
+java -jar granite-pack-lite-1.0.5-RELEASE.jar
 ```
 
-在target目录下会看到打包好的granite-lite-0.2.1.RELEASE.zip。
+在target目录下会看到打包好的granite-lite-standard-1.0.5-RELEASE.zip。
 
 ##### 打包Granite Cluster
-
 * ** 打包MgtNode **
-
 ```
-cd com.firstlinecode.granite.pack/com.firstlinecode.granite.pack.cluster.mgtnode
+cd granite
+cd pack/cluster-mgtnode
 mvn clean package
 cd target
-java -jar com.firstlinecode.granite.pack.cluster.mgtnode-0.2.1.RELEASE.jar
+java -jar granite-pack-cluster-mgtnode-1.0.5-RELEASE.jar
 ```
 
-在target目录下会看到打包好的granite-cluster-mgtnode-0.2.1.RELEASE.zip。
+在target目录下会看到打包好的granite-cluster-nodes-mgtnode-1.0.5-RELEASE.zip。
 
 * ** 打包AppNode **
-
 ```
-cd com.firstlinecode.granite.cluster/com.firstlinecode.granite.cluster.node/com.firstlinecode.granite.cluster.node.appnode
+cd granite
+cd cluster/nodes/appnode
 mvn clean package
 ```
 
-在target目录下会看到打包好的granite-cluster-appnode-0.2.1.RELEASE.zip。
+在target目录下会看到打包好的granite-cluster-nodes-appnode-1.0.5-RELEASE.zip和granite-cluster-nodes-appnode-1.0.5-RELEASE.tar.gz。

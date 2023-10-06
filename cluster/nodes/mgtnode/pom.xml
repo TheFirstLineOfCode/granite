@@ -32,7 +32,7 @@
 	</dependencies>
 	
 	<build>
-		<finalName>granite-cluster-node-mgtnode-${project.version}</finalName>
+		<finalName>granite-cluster-nodes-mgtnode-${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -43,7 +43,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>libs/</classpathPrefix>
-							<mainClass>com.thefirstlineofcode.granite.cluster.node.mgtnode.Main</mainClass>
+							<mainClass>com.thefirstlineofcode.granite.cluster.nodes.mgtnode.Main</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

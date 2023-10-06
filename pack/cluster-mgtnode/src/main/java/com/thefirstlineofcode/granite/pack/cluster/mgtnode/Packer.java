@@ -125,8 +125,8 @@ public class Packer {
 
 	private File copyMgtnodeArtifact() {
 		File deployClusterDir = new File(options.getGraniteProjectDirPath(), "cluster");
-		File nodeProjectDir = new File(deployClusterDir, "node");
-		File mgtnodeProjectDir = new File(nodeProjectDir, "mgtnode");
+		File nodesProjectDir = new File(deployClusterDir, "nodes");
+		File mgtnodeProjectDir = new File(nodesProjectDir, "mgtnode");
 		PackUtils.runMvn(mgtnodeProjectDir, options.isOffline(), "clean", "package");
 		
 		File mgtnodeProjectTargetDir = new File(mgtnodeProjectDir, "target");

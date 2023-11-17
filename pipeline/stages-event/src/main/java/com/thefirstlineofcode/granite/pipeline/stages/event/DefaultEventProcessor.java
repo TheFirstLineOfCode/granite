@@ -20,12 +20,12 @@ import com.thefirstlineofcode.granite.framework.core.pipeline.IMessage;
 import com.thefirstlineofcode.granite.framework.core.pipeline.IMessageProcessor;
 import com.thefirstlineofcode.granite.framework.core.pipeline.SimpleMessage;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.IPipelineExtendersContributor;
+import com.thefirstlineofcode.granite.framework.core.pipeline.stages.PipelineExtendersContributors;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.IEvent;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.IEventContext;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.IEventListener;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.IEventListenerFactory;
 import com.thefirstlineofcode.granite.framework.core.repository.IInitializable;
-import com.thefirstlineofcode.granite.framework.core.utils.CommonUtils;
 
 @Component("default.event.processor")
 public class DefaultEventProcessor implements IMessageProcessor, IInitializable,
@@ -128,7 +128,8 @@ public class DefaultEventProcessor implements IMessageProcessor, IInitializable,
 	}
 	
 	private void loadContributedEventListeners() {
-		IPipelineExtendersContributor[] extendersContributors = CommonUtils.getExtendersContributors(appComponentService);
+		IPipelineExtendersContributor[] extendersContributors = PipelineExtendersContributors.getInstance(
+				appComponentService.getPluginManager()).getContributors();
 		
 		for (IPipelineExtendersContributor extendersContributor : extendersContributors) {
 			IEventListenerFactory<?>[] listenerFactories = extendersContributor.getEventListenerFactories();

@@ -7,21 +7,15 @@ import java.io.StringWriter;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
 import org.slf4j.Logger;
 
-import com.thefirstlineofcode.granite.framework.core.adf.IApplicationComponentService;
-import com.thefirstlineofcode.granite.framework.core.pipeline.stages.IPipelineExtendersContributor;
-
 public class CommonUtils {
     private static final char SEPARATOR_KEY_VALUE = '=';
 	private static final String SEPARATOR_PROPERTIES = ";";
 	
-	private static List<IPipelineExtendersContributor> extendersContributors;
-
 	public static boolean equalsEvenNull(Object obj1, Object obj2) {
 		if (obj1 == null)
 			return obj2 == null;
@@ -108,17 +102,6 @@ public class CommonUtils {
 		}
 		
 		return false;
-	}
-	
-	public static IPipelineExtendersContributor[] getExtendersContributors(IApplicationComponentService appComponentService) {
-		if (extendersContributors == null) {
-			extendersContributors = appComponentService.getPluginManager().getExtensions(IPipelineExtendersContributor.class);			
-		}
-		
-		if (extendersContributors == null || extendersContributors.size() == 0)
-			return new IPipelineExtendersContributor[0];
-		
-		return extendersContributors.toArray(new IPipelineExtendersContributor[extendersContributors.size()]);
 	}
 	
 	@SuppressWarnings("unchecked")

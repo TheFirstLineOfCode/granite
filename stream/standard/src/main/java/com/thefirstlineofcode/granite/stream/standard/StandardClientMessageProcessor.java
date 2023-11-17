@@ -49,6 +49,7 @@ import com.thefirstlineofcode.granite.framework.core.pipeline.IMessage;
 import com.thefirstlineofcode.granite.framework.core.pipeline.IMessageChannel;
 import com.thefirstlineofcode.granite.framework.core.pipeline.SimpleMessage;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.IPipelineExtendersContributor;
+import com.thefirstlineofcode.granite.framework.core.pipeline.stages.PipelineExtendersContributors;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.ConnectionClosedEvent;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.ConnectionOpenedEvent;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.event.IEventFirer;
@@ -378,13 +379,14 @@ public class StandardClientMessageProcessor implements IClientMessageProcessor, 
 	}
 	
 	private void loadContributedSessionListeners() {
-		IPipelineExtendersContributor[] contributors = CommonUtils.getExtendersContributors(appComponentService);
-		if (contributors == null || contributors.length == 0) {
+		IPipelineExtendersContributor[] extendersContributors = PipelineExtendersContributors.getInstance(
+				appComponentService.getPluginManager()).getContributors();
+		if (extendersContributors == null || extendersContributors.length == 0) {
 			return;
 		}
 		
-		for (IPipelineExtendersContributor contributor: contributors) {
-			ISessionListener[] sessionListeners = contributor.getSessionListeners();
+		for (IPipelineExtendersContributor extendersContributor: extendersContributors) {
+			ISessionListener[] sessionListeners = extendersContributor.getSessionListeners();
 			if (sessionListeners == null || sessionListeners.length == 0)
 				continue;
 			

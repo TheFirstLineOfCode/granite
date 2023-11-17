@@ -38,6 +38,7 @@ import com.thefirstlineofcode.granite.framework.core.connection.IConnectionConte
 import com.thefirstlineofcode.granite.framework.core.pipeline.IMessage;
 import com.thefirstlineofcode.granite.framework.core.pipeline.IMessageProcessor;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.IPipelineExtendersContributor;
+import com.thefirstlineofcode.granite.framework.core.pipeline.stages.PipelineExtendersContributors;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.parsing.IPipelinePreprocessor;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.parsing.IProtocolParserFactory;
 import com.thefirstlineofcode.granite.framework.core.repository.IInitializable;
@@ -68,10 +69,11 @@ public class MinimumMessageParsingProcessor implements IMessageProcessor, IIniti
 	public void init() {
 		registerPredefinedParsers();
 		
-		IPipelineExtendersContributor[] extendersFactories = CommonUtils.getExtendersContributors(appComponentService);
+		IPipelineExtendersContributor[] extendersContributors = PipelineExtendersContributors.getInstance(
+				appComponentService.getPluginManager()).getContributors();
 		
-		loadContributedProtocolParsers(extendersFactories);
-		loadContributedPipelinePreprocessors(extendersFactories);
+		loadContributedProtocolParsers(extendersContributors);
+		loadContributedPipelinePreprocessors(extendersContributors);
 	}
 
 	protected void loadContributedPipelinePreprocessors(IPipelineExtendersContributor[] extendersContributors) {

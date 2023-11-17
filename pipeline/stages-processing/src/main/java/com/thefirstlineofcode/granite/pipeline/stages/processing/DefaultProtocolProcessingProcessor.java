@@ -38,6 +38,7 @@ import com.thefirstlineofcode.granite.framework.core.config.IServerConfiguration
 import com.thefirstlineofcode.granite.framework.core.connection.IConnectionContext;
 import com.thefirstlineofcode.granite.framework.core.pipeline.IMessage;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.IPipelineExtendersContributor;
+import com.thefirstlineofcode.granite.framework.core.pipeline.stages.PipelineExtendersContributors;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.processing.DefaultIqResultProcessor;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.processing.IIqResultProcessor;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.processing.IProcessingContext;
@@ -97,7 +98,8 @@ public class DefaultProtocolProcessingProcessor implements com.thefirstlineofcod
 		defaultIqResultProcessor = new DefaultIqResultProcessor();
 		appComponentService.inject(defaultIqResultProcessor);
 		
-		IPipelineExtendersContributor[] extendersContributors = CommonUtils.getExtendersContributors(appComponentService);
+		IPipelineExtendersContributor[] extendersContributors = PipelineExtendersContributors.getInstance(
+				appComponentService.getPluginManager()).getContributors();
 		
 		for (IPipelineExtendersContributor extendersContributor : extendersContributors) {
 			IIqResultProcessor[] iqResultProcessors = extendersContributor.getIqResultProcessors();
@@ -149,10 +151,10 @@ public class DefaultProtocolProcessingProcessor implements com.thefirstlineofcod
 	}
 	
 	protected void loadContributedXepProcessors() {
-		IPipelineExtendersContributor[] extendersContributors = CommonUtils.getExtendersContributors(appComponentService);
+		IPipelineExtendersContributor[] extendersContributors = PipelineExtendersContributors.getInstance(
+				appComponentService.getPluginManager()).getContributors();
 		
 		for (IPipelineExtendersContributor extendersContributor : extendersContributors) {
-			
 			IXepProcessorFactory<?, ?>[] processorFactories = extendersContributor.getXepProcessorFactories();
 			if (processorFactories == null || processorFactories.length == 0)
 				continue;

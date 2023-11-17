@@ -34,10 +34,10 @@ import com.thefirstlineofcode.granite.framework.core.pipeline.IMessage;
 import com.thefirstlineofcode.granite.framework.core.pipeline.IMessageProcessor;
 import com.thefirstlineofcode.granite.framework.core.pipeline.SimpleMessage;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.IPipelineExtendersContributor;
+import com.thefirstlineofcode.granite.framework.core.pipeline.stages.PipelineExtendersContributors;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.routing.IPipelinePostprocessor;
 import com.thefirstlineofcode.granite.framework.core.pipeline.stages.routing.IProtocolTranslatorFactory;
 import com.thefirstlineofcode.granite.framework.core.repository.IInitializable;
-import com.thefirstlineofcode.granite.framework.core.utils.CommonUtils;
 
 public class MinimumRoutingProcessor implements IMessageProcessor, IInitializable,
 			IServerConfigurationAware, IApplicationComponentServiceAware {
@@ -59,9 +59,10 @@ public class MinimumRoutingProcessor implements IMessageProcessor, IInitializabl
 	public void init() {
 		registerPredefinedTranslators();
 		
-		IPipelineExtendersContributor[] extendersFactories = CommonUtils.getExtendersContributors(appComponentService);
-		loadContributedTranslators(extendersFactories);
-		loadContributedPipelinePostprocessors(extendersFactories);
+		IPipelineExtendersContributor[] extendersContributors = PipelineExtendersContributors.getInstance(
+				appComponentService.getPluginManager()).getContributors();
+		loadContributedTranslators(extendersContributors);
+		loadContributedPipelinePostprocessors(extendersContributors);
 	}
 	
 	private void loadContributedTranslators(IPipelineExtendersContributor[] extendersContributors) {

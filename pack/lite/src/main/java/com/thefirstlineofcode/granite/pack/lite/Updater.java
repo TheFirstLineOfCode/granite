@@ -486,9 +486,6 @@ public class Updater {
 	}
 	
 	private boolean isSandLibrary(String libraryName) {
-		if (options.getSandProjectName() == null)
-			return false;
-		
 		return libraryName.startsWith(SAND_PROJECT_PREFIX);
 	}
 	

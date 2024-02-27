@@ -21,6 +21,9 @@ public abstract class DataContributorAdapter implements IDataContributor {
 		for (int i = 0; i < mapperFileNames.length; i++) {
 			String resourceName = DIRECTORY_OF_MAPPER_RESOURCES + mapperFileNames[i];
 			urls[i] = getClass().getClassLoader().getResource(resourceName);
+			
+			if (urls[i] == null)
+				throw new IllegalArgumentException(String.format("Mapper configuration file '%s' not found.", resourceName));
 		}
 		
 		return urls;

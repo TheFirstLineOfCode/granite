@@ -121,17 +121,6 @@ public class Main {
 					throw new IllegalArgumentException(String.format("Illegal webcam mode: %s. Only 'none', 'p2p' and 'kurento' are supported.", args[i]));
 				}
 				i++;
-			} else if ("sandProjectName".equals(args[i])) {
-				if (i == (args.length - 1)) {
-					throw new IllegalArgumentException("-sandProjectName should follow a <SAND-PROJECT-NAME> option value.");
-				}
-				i++;
-				
-				if (args[i].startsWith("-")) {
-					throw new IllegalArgumentException("-sandProjectName should follow a <SAND-PROJECT-NAME> option value.");
-				}
-				
-				options.setSandProjectName(args[i]);
 			} else if ("-commerical".equals(args[i])) {
 				options.setCommerical(true);
 				i++;
@@ -173,10 +162,8 @@ public class Main {
 		options.setTargetDirPath(PackUtils.getTargetDirPath(this));
 		options.setProjectDirPath(PackUtils.getProjectDirPath(options.getTargetDirPath()));
 		options.setGraniteProjectDirPath(PackUtils.getGraniteProjectDirPath(options.getProjectDirPath()));
-		if (options.getSandProjectName() == null) {
-			options.setSandProjectName(DEFAULT_SAND_PROJECT_NAME);
-		}
-		options.setSandProjectDirPath(PackUtils.getSandProjectDirPath(options.getProjectDirPath(), options.getSandProjectName()));
+		
+		options.setSandProjectDirPath(PackUtils.getSandProjectDirPath(options.getProjectDirPath(), DEFAULT_SAND_PROJECT_NAME));
 		
 		return options;
 	}
@@ -192,6 +179,5 @@ public class Main {
 		System.out.println("-offline                               Run in offline mode.");
 		System.out.println("-protocol <PROTOCOL>                   Specify the protocol. Optional protocols are 'mini', 'standard' or 'iot'. Default is 'standard'.");
 		System.out.println("-webcamMode <WEBCAM-MODE>              Specify that which webcam plugin needs to be deployed. Optional plugins are 'none', 'p2p', 'kurento'. Default is 'none'.");
-		System.out.println("-sandProjectName <SAND-PROJECT-NAME>   Specify the sand project name. Default is 'com.thefirstlineofcode.sand'.");
 	}
 }

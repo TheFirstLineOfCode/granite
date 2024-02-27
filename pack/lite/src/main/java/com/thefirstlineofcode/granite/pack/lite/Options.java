@@ -9,7 +9,6 @@ public class Options {
 	private String[] modules;
 	private String targetDirPath;
 	private String graniteProjectDirPath;
-	private String sandProjectName;
 	private String sandProjectDirPath;
 	private String projectDirPath;
 	private Protocol protocol;
@@ -95,14 +94,6 @@ public class Options {
 
 	public void setGraniteProjectDirPath(String graniteDir) {
 		this.graniteProjectDirPath = graniteDir;
-	}
-	
-	public String getSandProjectName() {
-		return sandProjectName;
-	}
-	
-	public void setSandProjectName(String sandProjectName) {
-		this.sandProjectName = sandProjectName;
 	}
 	
 	public String getSandProjectDirPath() {

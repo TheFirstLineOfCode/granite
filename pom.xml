@@ -15,7 +15,7 @@
 		<springframework.version>5.3.30</springframework.version>
 		<basalt.version>1.1.0-RELEASE</basalt.version>
 		<granite.version>1.0.5-RELEASE</granite.version>
-		<sand.version>1.1.0-BETA1</sand.version>
+		<sand.version>1.1.0-BETA2</sand.version>
 		<gem.version>0.2.0-RELEASE</gem.version>
 		<netty.version>4.1.77.Final</netty.version>
 	</properties>

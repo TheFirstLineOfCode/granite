@@ -11,7 +11,7 @@
 	</parent>	
 	
 	<groupId>com.thefirstlineofcode.granite</groupId>
-	<artifactId>granite-server-lite</artifactId>
+	<artifactId>granite-server</artifactId>
 	<name>Granite Server Lite with Kurento Webcam</name>
 	
 	<properties>

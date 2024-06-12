@@ -26,7 +26,8 @@ public class Options {
 	public enum Protocol {
 		MINI,
 		STANDARD,
-		IOT
+		IOT,
+		SAND_DEMO
 	}
 	
 	public Options() {

@@ -79,6 +79,12 @@
 				<groupId>com.thefirstlineofcode.sand.server.lite</groupId>
 				<artifactId>sand-server-lite-friends</artifactId>
 			</dependency>
+			
+			<!-- Sand Demo Plugins -->
+			<dependency>
+				<groupId>com.thefirstlineofcode.sand.demo</groupId>
+				<artifactId>sand-demo-server-lite</artifactId>
+			</dependency>
 	</dependencies>
 	
 	<build>

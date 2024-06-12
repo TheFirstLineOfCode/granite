@@ -21,7 +21,8 @@ import com.thefirstlineofcode.granite.pack.lite.Options.WebcamMode;
 public class Packer {
 	private static final String CONFIGURATION_DIR = "configuration";
 	private static final String SAND_PROJECT_PREFIX = "sand-";
-	
+	private static final String SAND_DEMO_PROJECT_PREFIX = "sand-demo-";
+
 	private Options options;
 	private List<String> systemLibraries;
 	
@@ -93,8 +94,9 @@ public class Packer {
 				if (isSystemLibrary(entryName)) {
 					int lastSlash = entryName.lastIndexOf('/');
 					String libraryName = entryName.substring(lastSlash + 1);
-					if (libraryName.startsWith(SAND_PROJECT_PREFIX) &&
-							options.getProtocol() != Protocol.IOT)
+					if (libraryName.startsWith(SAND_PROJECT_PREFIX) && (options.getProtocol() != Protocol.IOT || options.getProtocol() != Protocol.SAND_DEMO))
+						continue;
+					if (libraryName.startsWith(SAND_DEMO_PROJECT_PREFIX) && options.getProtocol() != Protocol.SAND_DEMO)
 						continue;
 					systemLibraries.add(libraryName);
 				}
@@ -211,8 +213,10 @@ public class Packer {
 			PackUtils.runMvn(new File(options.getProjectDirPath()), options.isOffline(), "-fmini-pom.xml", "dependency:copy-dependencies");
 		} else if (options.getProtocol() == Options.Protocol.STANDARD) {
 			PackUtils.runMvn(new File(options.getProjectDirPath()), options.isOffline(), "-fstandard-pom.xml", "dependency:copy-dependencies");
-		} else {
+		} else if (options.getProtocol() == Protocol.IOT) {
 			PackUtils.runMvn(new File(options.getProjectDirPath()), options.isOffline(), "-fiot-pom.xml", "dependency:copy-dependencies");
+		} else {
+			PackUtils.runMvn(new File(options.getProjectDirPath()), options.isOffline(), "-fsand-demo-pom.xml", "dependency:copy-dependencies");
 			
 			if (options.getWebcamMode() == WebcamMode.P2P) {
 				PackUtils.runMvn(new File(options.getProjectDirPath()), options.isOffline(), "-fp2p-webcam-pom.xml", "dependency:copy-dependencies");
@@ -239,8 +243,10 @@ public class Packer {
 			configurationFilesDir = new File(configurationDir, "standard");
 		} else if (options.getProtocol() == Options.Protocol.IOT) {
 			configurationFilesDir = new File(configurationDir, "iot");	
+		} else if (options.getProtocol() == Protocol.SAND_DEMO) {
+			configurationFilesDir = new File(configurationDir, "sand-demo");
 		} else {
-			throw new IllegalArgumentException("Only support 'mini', 'standard' and 'iot' protocols now.");
+			throw new IllegalArgumentException("Only support 'mini', 'standard', 'iot' and 'sand-demo' protocols now.");
 		}
 		
 		for (File configurationFile : configurationFilesDir.listFiles()) {

@@ -97,8 +97,10 @@ public class Main {
 					options.setProtocol(Options.Protocol.STANDARD);
 				} else if ("iot".equals(args[i])) {
 					options.setProtocol(Options.Protocol.IOT);
+				} else if ("sand-demo".equals(args[i])) {
+					options.setProtocol(Protocol.SAND_DEMO);
 				} else {
-					throw new IllegalArgumentException(String.format("Illegal protocol: %s. Only 'mini', 'standard' and 'iot' are supported.", args[i]));
+					throw new IllegalArgumentException(String.format("Illegal protocol: %s. Only 'mini', 'standard', 'iot' and 'sand-demo' are supported.", args[i]));
 				}
 				i++;
 			} else if ("-webcamMode".equals(args[i])) {
@@ -146,7 +148,7 @@ public class Main {
 		}
 		
 		if (options.getWebcamMode() == null) {			
-			if (options.getProtocol() == Protocol.IOT) {
+			if (options.getProtocol() == Protocol.SAND_DEMO) {
 				options.setWebcamMode(WebcamMode.P2P);
 			} else {
 				options.setWebcamMode(WebcamMode.NONE);
@@ -177,7 +179,7 @@ public class Main {
 		System.out.println("-cleanUpdate                           Clean and update specified modules.");
 		System.out.println("-cleanCache                            Clean the packing cache.");
 		System.out.println("-offline                               Run in offline mode.");
-		System.out.println("-protocol <PROTOCOL>                   Specify the protocol. Optional protocols are 'mini', 'standard' or 'iot'. Default is 'standard'.");
+		System.out.println("-protocol <PROTOCOL>                   Specify the protocol. Optional protocols are 'mini', 'standard', 'iot' or 'sand-demo'. Default is 'standard'.");
 		System.out.println("-webcamMode <WEBCAM-MODE>              Specify that which webcam plugin needs to be deployed. Optional plugins are 'none', 'p2p', 'kurento'. Default is 'none'.");
 	}
 }

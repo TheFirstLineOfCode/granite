@@ -387,11 +387,7 @@ public class DefaultProtocolProcessingProcessor implements com.thefirstlineofcod
 			context = new AttachOriginalMessageConnectionContextProxy(context, originalMessage);
 		}
 		
-		if (object instanceof StanzaError) {
-			logger.error("Received an atanza error object. Deliver it back to client. Session JID: {}. Stanza error: {}.",
-					context.getJid(), object);
-			context.write(object);
-		} else if (object instanceof Stanza) {
+		if (object instanceof Stanza) {
 			Stanza stanza = (Stanza)object;
 			
 			if (logger.isTraceEnabled()) {

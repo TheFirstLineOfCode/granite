@@ -225,6 +225,9 @@ public class MinimumMessageParsingProcessor implements IMessageProcessor, IIniti
 			return null;
 		}
 		
+		if (FlawedProtocolObject.isFlawed(out))
+			return out;
+		
 		Object originalOut = out;
 		for (IPipelinePreprocessor preprocessor : pipesPreprocessors) {
 			out = preprocessor.afterParsing(context.getJid(), out);
